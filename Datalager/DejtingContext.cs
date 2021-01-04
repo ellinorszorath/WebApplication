@@ -12,6 +12,6 @@ namespace Datalager
         {
         }
 
-        public DbSet<Person> Personer { get; set; }
+        public DbSet<Registrerad> Registrerade { get; set; }
     }
 }
