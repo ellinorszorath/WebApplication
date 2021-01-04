@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Datalager;
 using Microsoft.AspNetCore.Mvc;
+using WebApplication3.Models;
 
 namespace Dejtingsida.Controllers
 {
@@ -18,7 +19,13 @@ namespace Dejtingsida.Controllers
         public IActionResult Index()
         {
             var RegistreradeAnvändare = _dejtingContext.Registrering.ToList();
-            return View();
+
+            var profil = RegistreradeAnvändare.Select(p => new Profil
+            {
+                Förnamn = p.Förnamn,
+                Efternamn = p.Efternamn
+            }).ToList();
+            return View(profil);
         }
 
     }

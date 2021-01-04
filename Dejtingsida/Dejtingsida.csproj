@@ -18,8 +18,4 @@
     <ProjectReference Include="..\Datalager\Datalager.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Views\Profil\" />
-  </ItemGroup>
-
 </Project>
