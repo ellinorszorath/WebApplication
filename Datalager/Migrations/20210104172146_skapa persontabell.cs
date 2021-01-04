@@ -15,6 +15,7 @@ namespace Datalager.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Förnamn = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Efternamn = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Användarnamn = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Födelsedatum = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Lösenord = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
