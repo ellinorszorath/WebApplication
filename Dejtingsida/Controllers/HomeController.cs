@@ -28,12 +28,12 @@ namespace Dejtingsida.Controllers
             return View();
         }
 
-        public IActionResult Person()
+        public IActionResult Login()
         {
             return View();
         }
 
-        public IActionResult Registrerad()
+        public IActionResult Registrera()
         {
             return View();
         }
