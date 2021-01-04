@@ -1,0 +1,24 @@
+﻿body {
+    background-repeat: no-repeat;
+    background-image: linear-gradient(lightgray, lightpink);
+}
+div.exempelperson {
+    background-color: lightpink;
+    border-style: dashed;
+    border-color: white;
+    border-radius: 10px;
+    flex: 33%; 
+    margin-right: 5px;
+}
+div.flex {
+
+    display: flex;
+    flex-direction: row;
+}
+p {
+    font-family: 'Lobster Two', cursive;
+    font-size: 1.3em;
+}
+h1.display-4 {
+    font-family: 'Lobster Two', cursive;
+}
