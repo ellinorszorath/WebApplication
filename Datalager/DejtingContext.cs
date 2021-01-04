@@ -7,7 +7,7 @@ using Datalager.Models;
 
 namespace Datalager
 {
-    public class DejtingContext : IdentityDbContext
+    public class DejtingContext : DbContext
     {
         public DejtingContext(DbContextOptions<DejtingContext> options) : base(options)
         {

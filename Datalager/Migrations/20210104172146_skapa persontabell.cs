@@ -1,16 +1,14 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Datalager.Migrations
 {
-    public partial class LäggTillPerson : Migration
+    public partial class skapapersontabell : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Personer",
+                name: "Registrering",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -21,14 +19,14 @@ namespace Datalager.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Persons", x => x.Id);
-                }); ;
+                    table.PrimaryKey("PK_Registrering", x => x.Id);
+                });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Personer");
+                name: "Registrering");
         }
     }
 }
