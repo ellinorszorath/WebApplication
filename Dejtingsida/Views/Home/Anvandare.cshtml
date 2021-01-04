@@ -1,0 +1,47 @@
+﻿@model Dejtingsida.Models.Person
+
+@{
+    ViewData["Title"] = "Anvandare";
+}
+<head>
+    <link rel="stylesheet" href="~/css/Start.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Lobster+Two&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="rubrik">
+    <img class="profilbild" scr="bild" alt="Profilbild saknas" />
+    <h4>Förnamn Efternamn, ålder</h4>
+</div>
+<div class="beskrivning">
+    <a class="om">Om mig</a><a class="beskrivning">
+        Studerar tredje terminen på det systemvetenskapliga-programmet på Örebro Universitet. Har goda kunskaper inom java-programmering och även grundläggande kunskaper inom programmering med C++.
+        Här nedan finns en länk där man kan se alla de projekt jag varit delaktig i!
+    </a>
+</div>
+<button class="vänförfrågan" onclick="vänförfrågan">Skicka vänförfrågan</button>
+<div class="nyttInlägg">
+    <a class="inlägg">Skriv ett inlägg</a>
+    <input class="namn" placeholder="Ange ditt namn" />
+    <textarea class="inlägg" placeholder="Skriv ditt inlägg här..." /></textarea>
+    <button class="publicera" onclick="publicera">Publicera inlägg</button>
+</div>    
+<div class="vägg">
+    <h4 class="inlägg">Inlägg</h4>
+    <div class="inlägg">
+        <h1>Namn på person som gjort inlägg</h1>
+        <a>Hej hopp hoppas du har haft en underbar dag :)</a>
+    </div>
+    <div class="inlägg">
+        <h1>Namn på person som gjort inlägg</h1>
+        <a>Hej hopp hoppas du har haft en underbar dag :)</a>
+    </div>
+    <div class="inlägg">
+        <h1>Namn på person som gjort inlägg</h1>
+        <a>Hej hopp hoppas du har haft en underbar dag :)</a>
+    </div>
+    <div class="inlägg">
+        <h1>Namn på person som gjort inlägg</h1>
+        <a>Hej hopp hoppas du har haft en underbar dag :)</a>
+    </div>
+</div>
+</body>

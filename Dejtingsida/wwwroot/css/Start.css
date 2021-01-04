@@ -15,10 +15,72 @@ div.flex {
     display: flex;
     flex-direction: row;
 }
-p {
+a {
+    color: black;
     font-family: 'Lobster Two', cursive;
     font-size: 1.3em;
 }
 h1.display-4 {
     font-family: 'Lobster Two', cursive;
+}
+div.beskrivning {
+   background-color: lightblue;
+    width: 60%;
+    border-radius: 20px;
+    padding: 20px;
+    border: 2px dashed white;
+}
+div.vägg {
+    width: 90%;
+    height: auto;
+    background-color: lightgray;
+    border-radius: 10px; 
+    display: flex;
+    flex-direction: column;
+}
+div.inlägg {
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+    width: 95%;
+    height:auto;
+    border-radius: 10px;
+    background-color: white;
+    text-align: center;
+    flex: auto;
+}
+h1 {
+    text-align: left;
+    margin-left: 5px;
+}
+h4 {
+    font-family: 'Lobster Two', cursive;
+    font-size: 2em;
+}
+div.nyttInlägg {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+button.publicera {
+    width: 20%;
+    font-family: 'Lobster Two', cursive;
+    flex: auto;
+}
+textarea.inlägg {
+    width:50%;
+    height: 6em;
+    margin-bottom: 8px;
+    text-align:left;
+}
+input.namn {
+    width:50%;
+    height: auto;
+    margin-bottom: 8px;
+
+}
+h4.inlägg {
+    margin-top:10px;
+    margin-left: 10px;
+    margin-bottom: 20px;
 }
