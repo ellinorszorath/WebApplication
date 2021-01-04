@@ -1,8 +1,43 @@
-﻿@{
+﻿@model WebApplication3.Models.Registrerad
+
+@{
     ViewData["Title"] = "Registrera";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Registrera ny användare</h1>
-    <p></p>
+<h1>Registrera</h1>
+
+<h4>Registrerad</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Registrera">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Förnamn" class="control-label"></label>
+                <input asp-for="Förnamn" class="form-control" />
+                <span asp-validation-for="Förnamn" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Efternamn" class="control-label"></label>
+                <input asp-for="Efternamn" class="form-control" />
+                <span asp-validation-for="Efternamn" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Ålder" class="control-label"></label>
+                <input asp-for="Ålder" class="form-control" />
+                <span asp-validation-for="Ålder" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
 </div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
