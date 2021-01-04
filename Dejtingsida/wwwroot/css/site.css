@@ -3,7 +3,7 @@ for details on configuring this project to bundle and minify static web assets. 
 
 a.navbar-brand {
     font-family: 'Lobster Two', cursive;
-    font-size: large;
+    font-size: x-large;
     white-space: normal;
     text-align: center;
     word-break: break-all;
