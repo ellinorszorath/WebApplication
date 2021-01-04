@@ -13,7 +13,8 @@ namespace Datalager.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Namn = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Förnamn = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Efternamn = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Födelsedatum = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Lösenord = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
