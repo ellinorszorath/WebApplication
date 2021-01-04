@@ -9,7 +9,7 @@ namespace WebApplication3.Models
     {
         public String Förnamn{ get; set; }
         public String Efternamn { get; set; }
-        public int Ålder { get; set; }
+        public DateTime Födelsedatum { get; set; }
 
     }
 }
