@@ -23,7 +23,8 @@ namespace Dejtingsida.Controllers
             var profil = RegistreradeAnvändare.Select(p => new Profil
             {
                 Förnamn = p.Förnamn,
-                Efternamn = p.Efternamn
+                Efternamn = p.Efternamn,
+                Användarnamn = p.Användarnamn
             }).ToList();
             return View(profil);
         }
