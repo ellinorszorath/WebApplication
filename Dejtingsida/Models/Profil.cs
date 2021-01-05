@@ -9,6 +9,7 @@ namespace WebApplication3.Models
     {
         public String Förnamn { get; set; }
         public String Efternamn { get; set; }
+        public String Användarnamn { get; set; }
 
     }
 }
