@@ -9,10 +9,18 @@ namespace Dejtingsida.Controllers
     public class Start : Controller
     {
         public Boolean inloggad= false;
-        public Boolean kollaOmInloggad()
+        public void kollaOmInloggad()
         {
-            return true;
-            return false;
+            if(inloggad == true)
+            {
+                
+            }
+            else
+            {
+                
+            }
+            
         }
+
     }
 }
