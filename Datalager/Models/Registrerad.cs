@@ -12,5 +12,7 @@ namespace Datalager.Models
         public string Användarnamn { get; set; }
         public DateTime Födelsedatum { get; set; }
         public string Lösenord { get; set; }
+        public int Vänförfrågningar { get; set; }
+
     }
 }
