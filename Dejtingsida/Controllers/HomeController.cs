@@ -28,7 +28,7 @@ namespace Dejtingsida.Controllers
             return View();
         }
 
-        public IActionResult Login()
+        public IActionResult _LoginPartial()
         {
             return View();
         }
