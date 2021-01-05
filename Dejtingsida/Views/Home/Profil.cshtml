@@ -3,6 +3,11 @@
 @{
     ViewData["Title"] = "Profil";
 }
-<h1>@ViewData["Title"]</h1>
-
-<p>Use this page to detail your site's privacy policy.</p>
+<h1>
+    Min Profil
+</h1>
+<div class="rubrikProfil"> 
+    <img class="profilbild" scr="bild" alt="Profilbild saknas" />
+    <p>Förnamn Efternamn, ålder</p>
+    </div>
+<button class="redigera" onclick= "location.href='@Url.Action("Redigera", "Home")'"> Redigera profil</button>
