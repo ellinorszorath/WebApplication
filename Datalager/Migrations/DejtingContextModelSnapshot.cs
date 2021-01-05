@@ -26,6 +26,9 @@ namespace Datalager.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Användarnamn")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Efternamn")
                         .HasColumnType("nvarchar(max)");
 
@@ -37,6 +40,9 @@ namespace Datalager.Migrations
 
                     b.Property<string>("Lösenord")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Vänförfrågningar")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 

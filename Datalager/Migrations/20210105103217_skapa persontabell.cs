@@ -11,14 +11,14 @@ namespace Datalager.Migrations
                 name: "Registrering",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Förnamn = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Efternamn = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Användarnamn = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Födelsedatum = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    Lösenord = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Vänförfrågningar = table.Column<string>(type: "int", nullable: true)
+                    Förnamn = table.Column<string>(nullable: true),
+                    Efternamn = table.Column<string>(nullable: true),
+                    Användarnamn = table.Column<string>(nullable: true),
+                    Födelsedatum = table.Column<DateTime>(nullable: false),
+                    Lösenord = table.Column<string>(nullable: true),
+                    Vänförfrågningar = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
