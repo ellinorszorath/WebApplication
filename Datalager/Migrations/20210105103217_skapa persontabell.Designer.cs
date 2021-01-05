@@ -10,32 +10,41 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Datalager.Migrations
 {
     [DbContext(typeof(DejtingContext))]
-    [Migration("20210104172146_skapa persontabell")]
+    [Migration("20210105103217_skapa persontabell")]
     partial class skapapersontabell
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .UseIdentityColumns()
+                .HasAnnotation("ProductVersion", "3.1.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.1");
+                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Datalager.Models.Registrerad", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
-                        .UseIdentityColumn();
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Användarnamn")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Efternamn")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("Födelsedatum")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("Förnamn")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Lösenord")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Namn")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("Vänförfrågningar")
+                        .HasColumnType("int");
 
                     b.HasKey("Id");
 
