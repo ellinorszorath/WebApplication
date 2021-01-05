@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Datalager.Migrations
 {
     [DbContext(typeof(DejtingContext))]
-    [Migration("20210105120325_ny")]
-    partial class ny
+    [Migration("20210105131434_skapaAnvändare")]
+    partial class skapaAnvändare
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

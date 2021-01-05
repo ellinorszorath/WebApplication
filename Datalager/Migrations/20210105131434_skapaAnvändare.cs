@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Datalager.Migrations
 {
-    public partial class ny : Migration
+    public partial class skapaAnvändare : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
