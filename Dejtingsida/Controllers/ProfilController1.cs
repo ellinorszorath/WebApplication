@@ -24,7 +24,6 @@ namespace Dejtingsida.Controllers
             {
                 Förnamn = p.Förnamn,
                 Efternamn = p.Efternamn,
-                Användarnamn = p.Användarnamn
             }).ToList();
             return View(profil);
         }

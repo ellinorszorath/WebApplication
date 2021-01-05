@@ -19,8 +19,6 @@ namespace Dejtingsida.Areas.Identity
                     options.UseSqlServer(
                         context.Configuration.GetConnectionString("DejtingsidaContextConnection")));
 
-                services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                    .AddEntityFrameworkStores<DejtingsidaContext>();
             });
         }
     }
