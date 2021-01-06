@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Datalager;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,15 +9,23 @@ using System.Threading.Tasks;
 
 namespace Dejtingsida.Controllers
 {
-    [Route("api/[controller]")]
     [ApiController]
     public class Apicontroller : ControllerBase
     {
+        private readonly DejtingContext _dejtingContext;
+
+        public Apicontroller(DejtingContext dejtingContext)
+        {
+            _dejtingContext = dejtingContext;
+        }
+        [Route("api/[controller]")]
         // GET: api/<ValuesController>
         [HttpGet]
         public IEnumerable<string> Get()
         {
-            return new string[] { "value1", "value2" };
+            //return new string[] { "value1", "value2" };
+            return (IEnumerable<string>)_dejtingContext.Users.ToList();
+
         }
 
         // GET api/<ValuesController>/5
@@ -27,10 +36,10 @@ namespace Dejtingsida.Controllers
         }
 
         // POST api/<ValuesController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
+        //[HttpPost]
+        //public void Post([FromBody] string value)
+        //{
+        //}
 
         // PUT api/<ValuesController>/5
         [HttpPut("{id}")]

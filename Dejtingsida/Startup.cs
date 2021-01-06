@@ -48,6 +48,8 @@ namespace Dejtingsida
             {
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
+                //app.UseDefaultFiles();
+                //app.UseStaticFiles();
             }
             else
             {
