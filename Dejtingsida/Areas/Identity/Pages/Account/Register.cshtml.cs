@@ -51,7 +51,7 @@ namespace Dejtingsida.Areas.Identity.Pages.Account
             public string Email { get; set; }
 
             [Required]
-            [StringLength(100, ErrorMessage = "Lösenordet måste vara större än 3 tecken", MinimumLength = )]
+            [StringLength(100, ErrorMessage = "Lösenordet måste vara större än 3 tecken", MinimumLength = 3)]
             [DataType(DataType.Password)]
             [Display(Name = "Lösenord")]
             public string Password { get; set; }
