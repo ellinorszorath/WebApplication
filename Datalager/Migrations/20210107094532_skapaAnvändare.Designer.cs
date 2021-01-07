@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Datalager.Migrations
 {
     [DbContext(typeof(DejtingContext))]
-    [Migration("20210105131434_skapaAnvändare")]
+    [Migration("20210107094532_skapaAnvändare")]
     partial class skapaAnvändare
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -231,6 +231,12 @@ namespace Datalager.Migrations
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
+                    b.Property<byte[]>("Bild")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("BildNamn")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Efternamn")
                         .HasColumnType("nvarchar(max)");
 
@@ -238,12 +244,6 @@ namespace Datalager.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Förnamn")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Lösenord")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("ProfilbildUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Vänförfrågningar")

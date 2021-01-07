@@ -44,9 +44,9 @@ namespace Datalager.Migrations
                     Förnamn = table.Column<string>(nullable: true),
                     Efternamn = table.Column<string>(nullable: true),
                     Födelsedatum = table.Column<DateTime>(nullable: true),
-                    Lösenord = table.Column<string>(nullable: true),
                     Vänförfrågningar = table.Column<int>(nullable: true),
-                    ProfilbildUrl = table.Column<string>(nullable: true)
+                    BildNamn = table.Column<string>(nullable: true),
+                    Bild = table.Column<byte[]>(nullable: true)
                 },
                 constraints: table =>
                 {
