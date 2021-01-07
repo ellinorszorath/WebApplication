@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Datalager.Models
 {
-    class Inlägg
+    public class Inlägg
     {
         public int Id { get; set; }
         public DateTime Skapad { get; set; }
