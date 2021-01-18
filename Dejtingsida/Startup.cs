@@ -12,6 +12,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Identity.UI;
 using Datalager;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Dejtingsida
 {
@@ -21,7 +22,6 @@ namespace Dejtingsida
         {
             Configuration = configuration;
         }
-
         public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
@@ -39,6 +39,12 @@ namespace Dejtingsida
 
 
             services.AddControllersWithViews();
+
+            //Automatisk Autensitering, skapad av Simon. Kan bli problem vid debugging, bara att stänga av det då.
+            services.AddMvc(options =>
+            {
+                options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

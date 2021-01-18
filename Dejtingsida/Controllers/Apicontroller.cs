@@ -21,7 +21,6 @@ namespace Dejtingsida.Controllers
             _dejtingContext = dejtingContext;
         }
         [Route("getData")]
-        // GET: api/<ValuesController>
         [HttpGet]
         public string Get()
         {
