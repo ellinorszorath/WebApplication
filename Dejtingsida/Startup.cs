@@ -78,6 +78,30 @@ namespace Dejtingsida
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+
+            InitRolesAsync(app.ApplicationServices);
+        }
+
+        protected async Task InitRolesAsync(IServiceProvider applicationServices)
+        {
+            using (var scope = applicationServices.CreateScope())
+            {
+                var userManager = scope.ServiceProvider.GetService<UserManager<IdentityUser>>();
+                var roleManager = scope.ServiceProvider.GetService<RoleManager<IdentityRole>>();
+
+                var roleName = "Admin";
+                if (!await roleManager.RoleExistsAsync(roleName))
+                {
+                    await roleManager.CreateAsync(new IdentityRole(roleName));
+                }
+
+                var adminUser = await userManager.FindByEmailAsync("s.berg99@hotmail.com");
+
+                if (adminUser != null && !await userManager.IsInRoleAsync(adminUser, roleName))
+                {
+                    await userManager.AddToRoleAsync(adminUser, roleName);
+                }
+            }
         }
     }
 }
