@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Dejtingsida.Controllers
 {
-    [Authorize]
+    [Authorize] //Gör så att man behöver logga in för att kunna komma åt controllern
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

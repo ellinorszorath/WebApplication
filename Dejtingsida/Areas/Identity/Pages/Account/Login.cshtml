@@ -39,12 +39,13 @@
                         <a class="nav-link text-dark" id="forgot-password" asp-page="./ForgotPassword">Glömt ditt lösenord?</a>
                     </p>
                     <p>
-                        <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Registrera">Registrera dig</a>
+                        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Registrera dig</a>
                     </p>
                 </div>
             </form>
         </section>
     </div>
+</div>
    
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
