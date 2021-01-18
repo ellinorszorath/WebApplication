@@ -1,4 +1,5 @@
 ﻿using Dejtingsida.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace Dejtingsida.Controllers
 {
+    [Authorize]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -22,7 +24,7 @@ namespace Dejtingsida.Controllers
         {
             return View();
         }
-
+        
         public IActionResult Profil()
         {
             return View();
