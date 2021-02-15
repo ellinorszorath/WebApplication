@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 
-namespace WebApplication3.Models
+namespace Dejtingsida.Models
 {
     public class Registrerad
     {
@@ -15,7 +15,6 @@ namespace WebApplication3.Models
         public string Efternamn { get; set; }
         public DateTime Födelsedatum { get; set; }
         public string Lösenord { get; set; }
-        public int Vänförfrågningar { get; set; }
         public string ProfilbildUrl { get; set; }
 
     }

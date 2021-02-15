@@ -1,6 +1,7 @@
 ﻿using Datalager;
 using Dejtingsida.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,8 +11,8 @@ using System.Threading.Tasks;
 
 namespace Dejtingsida.Controllers
 {
-    [ApiController]
     [Route("api/[controller]")]
+    [ApiController]
     public class ApiController : ControllerBase
     {
         private readonly DejtingContext _dejtingContext;
@@ -20,8 +21,9 @@ namespace Dejtingsida.Controllers
         {
             _dejtingContext = dejtingContext;
         }
-        [Route("getData")]
         [HttpGet]
+        [Route("getData")]
+        
         public string Get()
         {
             //return new string[] { "value1", "value2" };
@@ -30,10 +32,17 @@ namespace Dejtingsida.Controllers
 
 
         }
+        [HttpPost]
+        [Route("post")]
+        public void SkickaPost(Inlägg meddelande)
+        {
+            var hej = meddelande;
+        }
 
         // GET api/<ValuesController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        [Route("get")]
+        public string GetInloggadAnvändare()
         {
             return "value";
         }

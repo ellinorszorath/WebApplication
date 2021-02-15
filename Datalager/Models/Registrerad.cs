@@ -10,7 +10,6 @@ namespace Datalager.Models
         public string Förnamn { get; set; }
         public string Efternamn { get; set; }
         public DateTime Födelsedatum { get; set; }
-        public int Vänförfrågningar { get; set; }
         public string BildNamn { get; set; }
         public byte[] Bild { get; set; }
 

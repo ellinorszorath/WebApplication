@@ -1,4 +1,4 @@
-﻿@model Dejtingsida.Models.Person
+﻿@model Datalager.Models.Registrerad
 
 @{
     ViewData["Title"] = "Anvandare";
@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="~/css/Start.css" />
     <link href="https://fonts.googleapis.com/css2?family=Lobster+Two&display=swap" rel="stylesheet">
 </head>
-<body>
 <div class="rubrik">
     <img class="profilbild" scr="bild" alt="Profilbild saknas" />
     <h4>Förnamn Efternamn, ålder</h4>
@@ -21,8 +20,9 @@
 <button class="vänförfrågan" onclick="vänförfrågan">Skicka vänförfrågan</button>
 <div class="nyttInlägg">
     <a class="inlägg">Skriv ett inlägg</a>
-    <textarea class="inlägg" placeholder="Skriv ditt inlägg här..."></textarea>
-    <button> class="publicera" <input type="button" value="Create" onclick="location.href='@Url.Action("Get", "Api")'" />Publicera inlägg</button>
+    <textarea class="form-control" rows="5" style="resize:none;" id="postInnehåll"></textarea>
+    @*<button> class="publicera" <input type="button" value="Create" onclick="location.href='@Url.Action("Get", "Api")'" />Publicera inlägg</button>*@
+    <input id="post" type="submit" value="Create" class="btn btn-primary" /> 
 </div>    
 <div class="vägg">
     <h4 class="inlägg">Inlägg</h4>
@@ -43,4 +43,19 @@
         <a>Hej hopp hoppas du har haft en underbar dag :)</a>
     </div>
 </div>
-</body>
+
+@section Scripts {
+    <script>
+        $("#post").click((e) => {
+            e.preventDefault();
+            $.post("/api/api/post", {Text: "meddelande test"})
+                .then((result) => alert(result))
+            })
+        };
+    }   
+    </script>
+    }
+
+    
+    
+
