@@ -12,6 +12,10 @@ namespace Datalager.Models
         public DateTime Födelsedatum { get; set; }
         public string BildNamn { get; set; }
         public byte[] Bild { get; set; }
+        //public int Id { get; set; }
+        //public string Email { get; set; }
+        public string Lösenord { get; set; }
+        public string Användarnamn { get; set; }
 
     }
 }

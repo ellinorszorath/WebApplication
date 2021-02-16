@@ -26,6 +26,9 @@ namespace Datalager.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<string>("Message")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("MottagareId")
                         .HasColumnType("nvarchar(450)");
 
@@ -271,6 +274,9 @@ namespace Datalager.Migrations
                 {
                     b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
 
+                    b.Property<string>("Användarnamn")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<byte[]>("Bild")
                         .HasColumnType("varbinary(max)");
 
@@ -284,6 +290,9 @@ namespace Datalager.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Förnamn")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Lösenord")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasDiscriminator().HasValue("Registrerad");
