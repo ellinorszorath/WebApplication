@@ -13,5 +13,6 @@ namespace Datalager
 
         public DbSet<Registrerad> Registrering { get; set; }
         public DbSet<Inlägg> Inlägg { get; set; }
+        public DbSet<Vänförfrågning> Vänförfrågning { get; set; }
     }
 }

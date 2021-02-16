@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Datalager.Migrations
 {
     [DbContext(typeof(DejtingContext))]
-    [Migration("20210107111027_inlägg")]
-    partial class inlägg
+    [Migration("20210216095555_skapaInlägg")]
+    partial class skapaInlägg
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -28,7 +28,10 @@ namespace Datalager.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("AnvändareId")
+                    b.Property<string>("MottagareId")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("SenderId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("Skapad")
@@ -36,7 +39,9 @@ namespace Datalager.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AnvändareId");
+                    b.HasIndex("MottagareId");
+
+                    b.HasIndex("SenderId");
 
                     b.ToTable("Inlägg");
                 });
@@ -266,17 +271,18 @@ namespace Datalager.Migrations
                     b.Property<string>("Förnamn")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Vänförfrågningar")
-                        .HasColumnType("int");
-
                     b.HasDiscriminator().HasValue("Registrerad");
                 });
 
             modelBuilder.Entity("Datalager.Models.Inlägg", b =>
                 {
-                    b.HasOne("Datalager.Models.Registrerad", "Användare")
+                    b.HasOne("Datalager.Models.Registrerad", "Mottagare")
                         .WithMany()
-                        .HasForeignKey("AnvändareId");
+                        .HasForeignKey("MottagareId");
+
+                    b.HasOne("Datalager.Models.Registrerad", "Sender")
+                        .WithMany()
+                        .HasForeignKey("SenderId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
