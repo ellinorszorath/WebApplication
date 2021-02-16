@@ -40,7 +40,7 @@ namespace Dejtingsida
 
             services.AddControllersWithViews();
 
-            //Automatisk Autensitering, skapad av Simon. Kan bli problem vid debugging, bara att stänga av det då.
+            //Automatisk Autensitering, Kan bli problem vid debugging, bara att stänga av det då.
             services.AddMvc(options =>
             {
                 options.Filters.Add(new AutoValidateAntiforgeryTokenAttribute());
