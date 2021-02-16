@@ -1,4 +1,5 @@
 ﻿using Datalager;
+using Datalager.Models;
 using Dejtingsida.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
@@ -34,10 +35,33 @@ namespace Dejtingsida.Controllers
         }
         [HttpPost]
         [Route("post")]
-        public void SkickaPost(Inlägg meddelande)
+        public void SkickaPost(Datalager.Models.Inlägg meddelande)
         {
-            var hej = meddelande;
+            try
+            {
+                var inlaggMeddelande = meddelande.Message;
+                var inlaggMottagare = meddelande.Mottagare;
+                var inlaggAvsändare = meddelande.Sender;
+                var inlaggTid = meddelande.Skapad;
+                var inlaggId = meddelande.Id;
+
+                _dejtingContext.Inlägg.Add(new Datalager.Models.Inlägg
+                {
+                    Message = inlaggMeddelande,
+                    Sender = inlaggAvsändare,
+                    Mottagare = inlaggMottagare,
+                    Skapad = inlaggTid,
+                    Id = inlaggId
+                });
+                _dejtingContext.SaveChanges();
+            } 
+            catch (Exception)
+            {
+                Console.WriteLine("Gick inte att spara inlägg.");
+            }
         }
+
+    
 
         // GET api/<ValuesController>/5
         [HttpGet("{id}")]

@@ -30,9 +30,10 @@ namespace Dejtingsida.Controllers
 
             var användare = användareProfiler.Select(a => new Registrerad
             {
-                //Id = a.Id,
-                Förnamn = a.UserName,
+                Användarnamn = a.UserName,
+                Lösenord = a.PasswordHash,
             }).ToList();
+            Console.WriteLine(användare);
             return View(användare);
         }
         [Authorize]

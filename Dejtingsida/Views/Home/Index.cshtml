@@ -13,16 +13,6 @@
 {
     <!-- Ifall inga användare hittas skriv ut felmeddelande-->
     @if (Model != null)
-    {
-        <div class="container">
-            <div class="row" style="margin-top: 2em;">
-                <div class="col-12">
-                    <h3 style="text-align:center;">Testa null</h3>
-                </div>
-            </div>
-        </div>
-    }
-    else
 
         @foreach (var registrerad in Model)
         {
@@ -30,10 +20,20 @@
                 <div class="flex">
                     <div class="exempelperson">
                         <img class="profilbild" src="@registrerad.Bild" alt="Bild saknas" />
-                        <a asp-area="" asp-controller="Home" asp-action="Anvandare" asp-route-id="@registrerad.Id" class="Namn"> @registrerad.Förnamn + " " +  @registrerad.Efternamn </a>
+                        <a asp-area="" asp-controller="Home" asp-action="Anvandare" asp-route-id="@registrerad.Id" class="Namn"> @registrerad.Användarnamn</a>
                     </div>
                 </div>
             </li>
+        }
+        else
+        {
+        <div class="container">
+            <div class="row" style="margin-top: 2em;">
+                <div class="col-12">
+                    <h3 style="text-align:center;">Testa null</h3>
+                </div>
+            </div>
+        </div>
         }
 }
 catch (Exception)
@@ -46,19 +46,3 @@ catch (Exception)
         </div>
     </div>
 }
-
-
-@*<div class="flex">
-    <div class="exempelperson">
-        <img class="profilbild" scr="bild" alt="Bild saknas" />
-        <a asp-area="" asp-controller="Home" asp-action="Anvandare" class="Namn"> Namn </a>
-    </div>*@
-@*<div class="exempelperson">
-        <img class="profilbild" scr="bild" alt="Bild saknas" />
-        <a asp-area="" asp-controller="Home" asp-action="Anvandare" class="Namn"> Namn </a>
-    </div>
-    <div class="exempelperson">
-        <img class="profilbild" scr="bild" alt="Bild saknas" />
-        <a asp-area="" asp-controller="Home" asp-action="Anvandare" class="Namn"> Namn </a>
-    </div>*@
-        </div>
