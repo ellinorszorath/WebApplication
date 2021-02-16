@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Dejtingsida.Controllers
 {
-    [Authorize] //Gör så att man behöver logga in för att kunna komma åt controllern
+    /*[Authorize]*/ //Gör så att man behöver logga in för att kunna komma åt controllern
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -24,30 +24,32 @@ namespace Dejtingsida.Controllers
         {
             return View();
         }
-        
+        [Authorize]
         public IActionResult Profil()
         {
             return View();
         }
-
+        [Authorize]
         public IActionResult _LoginPartial()
         {
             return View();
         }
-
+        [Authorize]
         public IActionResult Registrera()
         {
             return View();
         }
+        [Authorize]
         public IActionResult Anvandare()
         {
             return View();
         }
-
+        [Authorize]
         public IActionResult Redigera()
         {
             return View();
         }
+        [Authorize]
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
