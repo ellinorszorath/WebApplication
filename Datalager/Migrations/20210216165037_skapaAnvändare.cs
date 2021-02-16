@@ -1,5 +1,5 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore.Migrations;
+﻿using Microsoft.EntityFrameworkCore.Migrations;
+using System;
 
 namespace Datalager.Migrations
 {
@@ -8,18 +8,18 @@ namespace Datalager.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "AspNetRoles",
-                columns: table => new
-                {
-                    Id = table.Column<string>(nullable: false),
-                    Name = table.Column<string>(maxLength: 256, nullable: true),
-                    NormalizedName = table.Column<string>(maxLength: 256, nullable: true),
-                    ConcurrencyStamp = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AspNetRoles", x => x.Id);
-                });
+                            name: "AspNetRoles",
+                            columns: table => new
+                            {
+                                Id = table.Column<string>(nullable: false),
+                                Name = table.Column<string>(maxLength: 256, nullable: true),
+                                NormalizedName = table.Column<string>(maxLength: 256, nullable: true),
+                                ConcurrencyStamp = table.Column<string>(nullable: true)
+                            },
+                            constraints: table =>
+                            {
+                                table.PrimaryKey("PK_AspNetRoles", x => x.Id);
+                            });
 
             migrationBuilder.CreateTable(
                 name: "AspNetUsers",
@@ -44,7 +44,8 @@ namespace Datalager.Migrations
                     Förnamn = table.Column<string>(nullable: true),
                     Efternamn = table.Column<string>(nullable: true),
                     Födelsedatum = table.Column<DateTime>(nullable: true),
-                    Vänförfrågningar = table.Column<int>(nullable: true),
+                    Lösenord = table.Column<string>(nullable: true),
+                    Användarnamn = table.Column<string>(nullable: true),
                     BildNamn = table.Column<string>(nullable: true),
                     Bild = table.Column<byte[]>(nullable: true)
                 },
@@ -198,29 +199,6 @@ namespace Datalager.Migrations
                 unique: true,
                 filter: "[NormalizedUserName] IS NOT NULL");
         }
-
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropTable(
-                name: "AspNetRoleClaims");
-
-            migrationBuilder.DropTable(
-                name: "AspNetUserClaims");
-
-            migrationBuilder.DropTable(
-                name: "AspNetUserLogins");
-
-            migrationBuilder.DropTable(
-                name: "AspNetUserRoles");
-
-            migrationBuilder.DropTable(
-                name: "AspNetUserTokens");
-
-            migrationBuilder.DropTable(
-                name: "AspNetRoles");
-
-            migrationBuilder.DropTable(
-                name: "AspNetUsers");
-        }
     }
 }
+

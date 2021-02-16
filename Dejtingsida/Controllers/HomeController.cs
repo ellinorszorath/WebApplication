@@ -1,4 +1,6 @@
-﻿using Dejtingsida.Models;
+﻿using Datalager;
+using Datalager.Models;
+using Dejtingsida.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -14,15 +16,24 @@ namespace Dejtingsida.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly DejtingContext _dejtingContext;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, DejtingContext dejtingContext)
         {
             _logger = logger;
+            _dejtingContext = dejtingContext;
         }
 
         public IActionResult Index()
         {
-            return View();
+            var användareProfiler = _dejtingContext.Users.ToList();
+
+            var användare = användareProfiler.Select(a => new Registrerad
+            {
+                //Id = a.Id,
+                Förnamn = a.UserName,
+            }).ToList();
+            return View(användare);
         }
         [Authorize]
         public IActionResult Profil()
