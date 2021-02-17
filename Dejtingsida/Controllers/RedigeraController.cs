@@ -23,9 +23,7 @@ namespace Dejtingsida.Controllers
         }
 
         [HttpPost]
-        public IActionResult Redigera(Models.r
-           
-            profil)
+        public IActionResult Redigera(Registrerad profil)
 
         {
             if (ModelState.IsValid)
