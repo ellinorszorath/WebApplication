@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Datalager.Models;
 using System.Threading.Tasks;
+using Dejtingsida.Models;
 
 namespace Dejtingsida.Controllers
 {
@@ -19,18 +20,18 @@ namespace Dejtingsida.Controllers
 
         public IActionResult Index()
         {
-            return View("Redigera", "Redigera");
+            return RedirectToAction("Redigera", "Redigera");
         }
 
-        [HttpPost]
-        public IActionResult Redigera(Registrerad profil)
+        public IActionResult Redigera(Dejtingsida.Models.Red profil)
 
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    Datalager.Models.Registrerad inloggadProfil = _DejtingContext.Registrering.SingleOrDefault(x => x.Email == User.Identity.Name);
+                    
+                    Datalager.Models.Registrerad inloggadProfil = _DejtingContext.Registrering.SingleOrDefault(x => x.Användarnamn == User.Identity.Name);
                     inloggadProfil.Förnamn = profil.Förnamn;
                     inloggadProfil.Efternamn = profil.Efternamn;
                     inloggadProfil.Födelsedatum = profil.Födelsedatum;

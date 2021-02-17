@@ -1,13 +1,13 @@
 ﻿using System;
-using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
-namespace Datalager.Models
+namespace Dejtingsida.Models
 {
-    public class Registrerad : IdentityUser
-    {
-        public string Användarnamn { get; set; }
+    public class Red
+    {public string Användarnamn { get; set; }
         public string Förnamn { get; set; }
         public string Efternamn { get; set; }
         public DateTime Födelsedatum { get; set; }
@@ -17,6 +17,5 @@ namespace Datalager.Models
         //public string Email { get; set; }
         public string Lösenord { get; set; }
         
-
     }
 }
