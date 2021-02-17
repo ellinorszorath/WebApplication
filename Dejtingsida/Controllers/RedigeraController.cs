@@ -49,7 +49,7 @@ namespace Dejtingsida.Controllers
 
             }
 
-            return RedirectToAction("Profil", "Home");
+            return RedirectToAction("Index", "Home");
         }
     }
 }
