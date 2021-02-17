@@ -1,13 +1,7 @@
 ﻿using Datalager;
-using Datalager.Models;
-using Dejtingsida.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.VisualStudio.Web.CodeGeneration.Contracts.Messaging;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Dejtingsida.Controllers
@@ -42,8 +36,8 @@ namespace Dejtingsida.Controllers
                 var inlaggMeddelande = meddelande.Message;
                 var inlaggMottagare = meddelande.Mottagare;
                 var inlaggAvsändare = meddelande.Sender;
-                var inlaggTid = meddelande.Skapad;
-                var inlaggId = meddelande.Id;
+                var inlaggTid = DateTime.UtcNow;
+                int inlaggId = meddelande.Id;
 
                 _dejtingContext.Inlägg.Add(new Datalager.Models.Inlägg
                 {

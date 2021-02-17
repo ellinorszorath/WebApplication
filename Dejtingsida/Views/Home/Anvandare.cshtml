@@ -1,54 +1,54 @@
 ﻿@model Datalager.Models.Registrerad;
-    @{
-        ViewData["Title"] = "Anvandare";
+@{
+    ViewData["Title"] = "Anvandare";
+}
+<head>
+    <link rel="stylesheet" href="~/css/Start.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Lobster+Two&display=swap" rel="stylesheet">
+</head>
+<div class="rubrik">
+    <img class="profilbild" scr="bild" alt="Profilbild saknas" />
+    <h4>Förnamn Efternamn, ålder</h4>
+</div>
+<div class="beskrivning">
+    <a class="om">Om mig</a><a class="beskrivning">
+        Studerar tredje terminen på det systemvetenskapliga-programmet på Örebro Universitet. Har goda kunskaper inom java-programmering och även grundläggande kunskaper inom programmering med C++.
+        Här nedan finns en länk där man kan se alla de projekt jag varit delaktig i!
+    </a>
+</div>
+<button class="vänförfrågan" onclick="vänförfrågan">Skicka vänförfrågan</button>
+<div class="nyttInlägg">
+    <a class="inlägg">Skriv ett inlägg</a>
+    <textarea class="form-control" rows="5" style="resize:none;" id="postInnehåll"></textarea>
+    @*<button> class="publicera" <input type="button" value="Create" onclick="location.href='@Url.Action("Get", "Api")'" />Publicera inlägg</button>*@
+    <input id="post" type="submit" value="Create" class="btn btn-primary" />
+</div>
+
+<div class="vägg">
     }
-    <head>
-        <link rel="stylesheet" href="~/css/Start.css" />
-        <link href="https://fonts.googleapis.com/css2?family=Lobster+Two&display=swap" rel="stylesheet">
-    </head>
-    <div class="rubrik">
-        <img class="profilbild" scr="bild" alt="Profilbild saknas" />
-        <h4>Förnamn Efternamn, ålder</h4>
-    </div>
-    <div class="beskrivning">
-        <a class="om">Om mig</a><a class="beskrivning">
-            Studerar tredje terminen på det systemvetenskapliga-programmet på Örebro Universitet. Har goda kunskaper inom java-programmering och även grundläggande kunskaper inom programmering med C++.
-            Här nedan finns en länk där man kan se alla de projekt jag varit delaktig i!
-        </a>
-    </div>
-    <button class="vänförfrågan" onclick="vänförfrågan">Skicka vänförfrågan</button>
-    <div class="nyttInlägg">
-        <a class="inlägg">Skriv ett inlägg</a>
-        <textarea class="form-control" rows="5" style="resize:none;" id="postInnehåll"></textarea>
-        @*<button> class="publicera" <input type="button" value="Create" onclick="location.href='@Url.Action("Get", "Api")'" />Publicera inlägg</button>*@
-        <input id="post" type="submit" value="Create" class="btn btn-primary" />
-    </div>
 
-    <div class="vägg">
-            }
 
-        
-        <h4 class="inlägg">Inlägg</h4>
-            <div class="inlägg">
-                <h1>Namn på person som gjort inlägg</h1>
-                <a>Hej hopp hoppas du har haft en underbar dag :)</a>
-            </div>
-            <div class="inlägg">
-                <h1>Namn på person som gjort inlägg</h1>
-                <a>Hej hopp hoppas du har haft en underbar dag :)</a>
-            </div>
-            <div class="inlägg">
-                <h1>Namn på person som gjort inlägg</h1>
-                <a>Hej hopp hoppas du har haft en underbar dag :)</a>
-            </div>
-            <div class="inlägg">
-                <h1>Namn på person som gjort inlägg</h1>
-                <a>Hej hopp hoppas du har haft en underbar dag :)</a>
-            </div>
+    <h4 class="inlägg">Inlägg</h4>
+    <div class="inlägg">
+        <h1>Namn på person som gjort inlägg</h1>
+        <a>Hej hopp hoppas du har haft en underbar dag :)</a>
     </div>
+    <div class="inlägg">
+        <h1>Namn på person som gjort inlägg</h1>
+        <a>Hej hopp hoppas du har haft en underbar dag :)</a>
+    </div>
+    <div class="inlägg">
+        <h1>Namn på person som gjort inlägg</h1>
+        <a>Hej hopp hoppas du har haft en underbar dag :)</a>
+    </div>
+    <div class="inlägg">
+        <h1>Namn på person som gjort inlägg</h1>
+        <a>Hej hopp hoppas du har haft en underbar dag :)</a>
+    </div>
+</div>
 
-    @section Scripts {
-        <script>
+@section Scripts {
+    <script>
         var Registrerad = @Html.Raw(Json.Serialize(Model));
         $(() =>
             $("#post").click(() => {
@@ -56,8 +56,8 @@
                     url: "/api/api/post",
                     type: "POST",
                     data: JSON.stringify({
-                        message: $("#postInnehåll").val(),
-                        @*Mottagare: @Model.Id*@
+                        message: $("#postInnehåll").val,
+                        Mottagare: @Model.Id
                     }),
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
@@ -65,5 +65,5 @@
                 });
             }));
 
-        </script>
-    }
+    </script>
+}
