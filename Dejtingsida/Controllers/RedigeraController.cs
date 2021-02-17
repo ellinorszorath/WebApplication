@@ -19,7 +19,7 @@ namespace Dejtingsida.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return View("Redigera", "Redigera");
         }
 
         [HttpPost]
@@ -48,7 +48,7 @@ namespace Dejtingsida.Controllers
 
             }
 
-            return RedirectToAction("Index", "Profil");
+            return RedirectToAction("Profil", "Home");
         }
     }
 }
