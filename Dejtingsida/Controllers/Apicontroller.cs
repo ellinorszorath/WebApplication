@@ -54,14 +54,14 @@ namespace Dejtingsida.Controllers
                     Id = inlaggId
                 });
                 _dejtingContext.SaveChanges();
-            } 
+            }
             catch (Exception)
             {
                 Console.WriteLine("Gick inte att spara inlägg.");
             }
         }
 
-    
+
 
         // GET api/<ValuesController>/5
         [HttpGet("{id}")]
