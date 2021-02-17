@@ -47,23 +47,23 @@
             </div>
     </div>
 
-    @*@section Scripts {
+    @section Scripts {
         <script>
-        var user = @Html.Raw(Json.Serialize(Model));
+        var Registrerad = @Html.Raw(Json.Serialize(Model));
         $(() =>
-            $("#publish").click(() => {
+            $("#post").click(() => {
                 $.ajax({
-                    url: "/api/api/postmessage",
+                    url: "/api/api/post",
                     type: "POST",
                     data: JSON.stringify({
-                        message: $("#postMessage").val(),
-                        receiverId: @Model.Id
+                        message: $("#postInnehåll").val(),
+                        @*Mottagare: @Model.Id*@
                     }),
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
-                    success: alert("Inlägg publicerat! Vänligen uppdatera sidan."),
+                    success: alert("Inlägg Skapat"),
                 });
             }));
 
         </script>
-    }*@
+    }
