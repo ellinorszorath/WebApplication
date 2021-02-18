@@ -8,6 +8,20 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.RazorPages;
+using Datalager.Models;
+using Datalager;
+using System.Security.Claims;
+using Dejtingsida.Models;
+using Dejtingsida.Viewmodels;
 using System.Threading.Tasks;
 
 namespace Dejtingsida.Controllers
@@ -16,32 +30,32 @@ namespace Dejtingsida.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        public readonly UserManager<Registrerad> _userManager;
         private readonly DejtingContext _dejtingContext;
 
-        public HomeController(ILogger<HomeController> logger, DejtingContext dejtingContext)
+        public HomeController(ILogger<HomeController> logger, DejtingContext dejtingContext, UserManager<Registrerad> users)
         {
+            _userManager = users;
             _logger = logger;
             _dejtingContext = dejtingContext;
         }
 
         public IActionResult Index()
         {
-            //List<Registrerad> användareProfiler = _dejtingContext.Registrering.ToList();
+            List<Registrerad> användareProfiler = _dejtingContext.Registrering.ToList();
 
-            //var användare = användareProfiler.Select(a => new Registrerad
-            //{
-            //    Användarnamn = a.UserName,
-            //    Lösenord = a.PasswordHash,
-            //}).ToList();
-            //Console.WriteLine(användare);
-            //return View(användare);
-            return View();
+            var användare = användareProfiler.Select(a => new Registrerad
+            {
+                Användarnamn = a.UserName,
+                Lösenord = a.PasswordHash,
+            }).ToList();
+            return View(användare);
         }
-        [Authorize]
-        public IActionResult Profil()
-        {
-            return View();
-        }
+        //[Authorize]
+        //public IActionResult Profil()
+        //{
+        //    return View();
+        //}
         [Authorize]
         public IActionResult _LoginPartial()
         {
@@ -68,5 +82,55 @@ namespace Dejtingsida.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        public IActionResult Profiltest()
+        {
+            return View();
+        }
+
+        [Route("Profil")]
+        public IActionResult Profil()
+        {
+            try
+            {
+                ClaimsPrincipal claim = this.User;
+                Registrerad user = _userManager.GetUserAsync(claim).Result;
+                AnvandareViewModel model = new AnvandareViewModel()
+                {
+                    Anvandare = user,
+                };
+
+
+                return View(model);
+            }
+            catch (Exception e)
+            {
+
+                Console.WriteLine(e.Message);
+                return View();
+            }
+        }
+
+        //Returns view of a specific profile
+
+        [Route("Profil/{Id}")]
+        public IActionResult Profil(string Id)
+        {
+            Registrerad user;
+            //If user with given Id exists
+            if (_userManager.FindByIdAsync(Id).Result != null)
+            {
+                user = _userManager.FindByIdAsync(Id).Result;
+                AnvandareViewModel model = new AnvandareViewModel()
+                {
+                    Anvandare = user
+                };
+                return View(model);
+            }
+            else
+            {
+                return View("Error");
+            }
+        }
     }
 }
+

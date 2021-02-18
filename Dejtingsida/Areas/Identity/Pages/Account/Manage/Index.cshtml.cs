@@ -58,8 +58,7 @@ namespace Dejtingsida.Areas.Identity.Pages.Account.Manage
             {
                 PhoneNumber = phoneNumber,
                 Förnamn = user.Förnamn,
-                Efternamn = user.Efternamn,
-                Födelsedatum = user.Födelsedatum
+                Efternamn = user.Efternamn
             };
         }
 
