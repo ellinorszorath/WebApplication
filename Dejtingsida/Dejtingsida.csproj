@@ -6,11 +6,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Viewmodels\**" />
+    <Content Remove="Viewmodels\**" />
+    <EmbeddedResource Remove="Viewmodels\**" />
+    <None Remove="Viewmodels\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\Datalager\Datalager.csproj" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Viewmodels\" />
     <Folder Include="Views\Profil\" />
   </ItemGroup>
 
