@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-
+using Datalager.Models;
 namespace Dejtingsida.Data
 {
-    public class DejtingsidaContext : IdentityDbContext<IdentityUser>
+    public class DejtingsidaContext : IdentityDbContext<Registrerad>
     {
         public DejtingsidaContext(DbContextOptions<DejtingsidaContext> options)
             : base(options)

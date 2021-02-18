@@ -1,7 +1,8 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@using Datalager.Models;
 
-@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
+@inject SignInManager<Registrerad> SignInManager
+@inject UserManager<Registrerad> UserManager
 
 <ul class="navbar-nav">
 @if (SignInManager.IsSignedIn(User))

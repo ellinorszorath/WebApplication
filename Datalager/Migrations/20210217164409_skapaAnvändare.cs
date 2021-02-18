@@ -40,7 +40,7 @@ namespace Datalager.Migrations
                     LockoutEnd = table.Column<DateTimeOffset>(nullable: true),
                     LockoutEnabled = table.Column<bool>(nullable: false),
                     AccessFailedCount = table.Column<int>(nullable: false),
-                    Discriminator = table.Column<string>(nullable: false),
+                    Discriminator = table.Column<string>(nullable: true),
                     Förnamn = table.Column<string>(nullable: true),
                     Efternamn = table.Column<string>(nullable: true),
                     Födelsedatum = table.Column<DateTime>(nullable: true),

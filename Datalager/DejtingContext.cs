@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Datalager
 {
-    public partial class DejtingContext : IdentityDbContext<IdentityUser>
+    public partial class DejtingContext : IdentityDbContext<Registrerad>
     {
         public DejtingContext(DbContextOptions<DejtingContext> options) : base(options)
         {

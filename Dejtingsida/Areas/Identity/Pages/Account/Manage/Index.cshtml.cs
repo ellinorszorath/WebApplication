@@ -6,17 +6,18 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Datalager.Models;
 
 namespace Dejtingsida.Areas.Identity.Pages.Account.Manage
 {
     public partial class IndexModel : PageModel
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<Registrerad> _userManager;
+        private readonly SignInManager<Registrerad> _signInManager;
 
         public IndexModel(
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager)
+            UserManager<Registrerad> userManager,
+            SignInManager<Registrerad> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -35,9 +36,18 @@ namespace Dejtingsida.Areas.Identity.Pages.Account.Manage
             [Phone]
             [Display(Name = "Phone number")]
             public string PhoneNumber { get; set; }
+            
+            [Display(Name = "Förnamn")]
+            public string Förnamn { get; set; }
+           
+            [Display(Name = "Efternamn")]
+            public string Efternamn { get; set; }
+            
+            [Display (Name = "Födelsedatum")]
+            public DateTime Födelsedatum { get; set; }
         }
 
-        private async Task LoadAsync(IdentityUser user)
+        private async Task LoadAsync(Registrerad user)
         {
             var userName = await _userManager.GetUserNameAsync(user);
             var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
@@ -46,7 +56,10 @@ namespace Dejtingsida.Areas.Identity.Pages.Account.Manage
 
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
+                Förnamn = user.Förnamn,
+                Efternamn = user.Efternamn,
+                Födelsedatum = user.Födelsedatum
             };
         }
 
@@ -76,19 +89,24 @@ namespace Dejtingsida.Areas.Identity.Pages.Account.Manage
                 return Page();
             }
 
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
-            if (Input.PhoneNumber != phoneNumber)
+            if (Input.Förnamn != user.Förnamn)
             {
-                var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, Input.PhoneNumber);
-                if (!setPhoneResult.Succeeded)
-                {
-                    StatusMessage = "Unexpected error when trying to set phone number.";
-                    return RedirectToPage();
-                }
+                user.Förnamn = Input.Förnamn;
+
+            }
+            if (Input.Efternamn != user.Efternamn) 
+            {
+                user.Efternamn = Input.Efternamn;
+            }
+            if (Input.Födelsedatum != user.Födelsedatum)
+            {
+                user.Födelsedatum = Input.Födelsedatum;
             }
 
+
+            await _userManager.UpdateAsync(user);
             await _signInManager.RefreshSignInAsync(user);
-            StatusMessage = "Your profile has been updated";
+            StatusMessage = "Din profil har uppdaterats!";
             return RedirectToPage();
         }
     }

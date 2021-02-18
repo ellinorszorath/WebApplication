@@ -26,15 +26,16 @@ namespace Dejtingsida.Controllers
 
         public IActionResult Index()
         {
-            var användareProfiler = _dejtingContext.Users.ToList();
+            //List<Registrerad> användareProfiler = _dejtingContext.Registrering.ToList();
 
-            var användare = användareProfiler.Select(a => new Registrerad
-            {
-                Användarnamn = a.UserName,
-                Lösenord = a.PasswordHash,
-            }).ToList();
-            Console.WriteLine(användare);
-            return View(användare);
+            //var användare = användareProfiler.Select(a => new Registrerad
+            //{
+            //    Användarnamn = a.UserName,
+            //    Lösenord = a.PasswordHash,
+            //}).ToList();
+            //Console.WriteLine(användare);
+            //return View(användare);
+            return View();
         }
         [Authorize]
         public IActionResult Profil()

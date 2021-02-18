@@ -13,6 +13,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.AspNetCore.Identity.UI;
 using Datalager;
 using Microsoft.AspNetCore.Mvc;
+using Datalager.Models;
 
 namespace Dejtingsida
 {
@@ -33,7 +34,7 @@ namespace Dejtingsida
                     Configuration.GetConnectionString("DefaultConnection")));
 
 
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
+            services.AddDefaultIdentity<Registrerad>(options => options.SignIn.RequireConfirmedAccount = false)
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<DejtingContext>();
 
@@ -86,7 +87,7 @@ namespace Dejtingsida
         {
             using (var scope = applicationServices.CreateScope())
             {
-                var userManager = scope.ServiceProvider.GetService<UserManager<IdentityUser>>();
+                var userManager = scope.ServiceProvider.GetService<UserManager<Registrerad>>();
                 var roleManager = scope.ServiceProvider.GetService<RoleManager<IdentityRole>>();
 
                 var roleName = "Admin";
