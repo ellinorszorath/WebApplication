@@ -88,7 +88,7 @@ namespace Dejtingsida.Controllers
         {
             return View();
         }
-
+        [Authorize]
         [Route("Profil")]
         public IActionResult Profil()
         {
@@ -113,7 +113,7 @@ namespace Dejtingsida.Controllers
         }
 
         //Returns view of a specific profile
-
+        [Authorize]
         [Route("Profil/{Id}")]
         public IActionResult Profil(string Id)
         { 
