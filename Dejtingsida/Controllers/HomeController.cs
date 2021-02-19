@@ -48,6 +48,8 @@ namespace Dejtingsida.Controllers
             {
                 Användarnamn = a.UserName,
                 Lösenord = a.PasswordHash,
+                Förnamn = a.Förnamn,
+                Efternamn = a.Efternamn
             }).ToList();
             return View(användare);
         }
