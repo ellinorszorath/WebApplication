@@ -80,7 +80,7 @@ namespace Dejtingsida.Controllers
         {
             return View();
         }
-
+        [Authorize]
         [Route("Profil")]
         public IActionResult Profil()
         {
@@ -96,23 +96,23 @@ namespace Dejtingsida.Controllers
 
                 return View(model);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
 
-                Console.WriteLine(e.Message);
+                Console.WriteLine(ex.Message);
                 return View();
             }
         }
 
         //Returns view of a specific profile
-
+        [Authorize]
         [Route("Profil/{Id}")]
         public IActionResult Profil(string Id)
-        {
+        { 
             Registrerad user;
-            //If user with given Id exists
             if (_userManager.FindByIdAsync(Id).Result != null)
             {
+               
                 user = _userManager.FindByIdAsync(Id).Result;
                 AnvandareViewModel model = new AnvandareViewModel()
                 {
@@ -122,6 +122,7 @@ namespace Dejtingsida.Controllers
             }
             else
             {
+
                 return View("Error");
             }
         }

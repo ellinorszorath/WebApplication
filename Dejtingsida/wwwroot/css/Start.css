@@ -7,18 +7,19 @@ div.exempelperson {
     border-style: dashed;
     border-color: white;
     border-radius: 10px;
-    flex: 33%; 
+    flex: 30%; 
     margin-right: 5px;
+    margin-top: 5px;
 }
 div.flex {
-
     display: flex;
     flex-direction: row;
 }
-a {
+a.Profil {
     color: black;
     font-family: 'Lobster Two', cursive;
-    font-size: 1.3em;
+    font-size: 2em;
+    float: left;
 }
 h1.display-4 {
     font-family: 'Lobster Two', cursive;
@@ -94,4 +95,25 @@ input[type=text] {
     background-position: 10px 10px;
     background-repeat: no-repeat;
 
+}
+.profilbild {
+    object-fit: cover;
+    width: 75px;
+    height: 75px;
+    max-width: 75px;
+    min-width: 75px;
+    max-height: 75px;
+    min-height: 75px;
+    border-radius: 50%;
+    float: right;
+}
+
+.profile-image-large {
+    object-fit: cover;
+    width: 150px;
+    height: 150px;
+    max-width: 150px;
+    min-width: 150px;
+    max-height: 150px;
+    min-height: 150px;
 }

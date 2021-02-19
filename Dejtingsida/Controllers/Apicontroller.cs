@@ -35,6 +35,11 @@ namespace Dejtingsida.Controllers
         [Route("post")]
         public void SkickaPost(Datalager.Models.Inlägg meddelande)
         {
+            if (meddelande is null)
+            {
+                throw new ArgumentNullException(nameof(meddelande));
+            }
+
             try
             {
                 var inlaggMeddelande = meddelande.Message;

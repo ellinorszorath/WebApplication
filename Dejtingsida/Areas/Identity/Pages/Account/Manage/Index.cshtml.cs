@@ -42,9 +42,12 @@ namespace Dejtingsida.Areas.Identity.Pages.Account.Manage
            
             [Display(Name = "Efternamn")]
             public string Efternamn { get; set; }
-            
             [Display (Name = "Födelsedatum")]
             public DateTime Födelsedatum { get; set; }
+            [Display(Name = "URL")]
+            public string BildNamn { get; set; }
+
+
         }
 
         private async Task LoadAsync(Registrerad user)
@@ -76,35 +79,38 @@ namespace Dejtingsida.Areas.Identity.Pages.Account.Manage
 
         public async Task<IActionResult> OnPostAsync()
         {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
+            var Anvandare = await _userManager.GetUserAsync(User);
+            if (Anvandare == null)
             {
                 return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
             if (!ModelState.IsValid)
             {
-                await LoadAsync(user);
+                await LoadAsync(Anvandare);
                 return Page();
             }
 
-            if (Input.Förnamn != user.Förnamn)
+            if (Input.Förnamn != Anvandare.Förnamn)
             {
-                user.Förnamn = Input.Förnamn;
+                Anvandare.Förnamn = Input.Förnamn;
 
             }
-            if (Input.Efternamn != user.Efternamn) 
+            if (Input.Efternamn != Anvandare.Efternamn) 
             {
-                user.Efternamn = Input.Efternamn;
+                Anvandare.Efternamn = Input.Efternamn;
             }
-            if (Input.Födelsedatum != user.Födelsedatum)
+            if (Input.Födelsedatum != Anvandare.Födelsedatum)
             {
-                user.Födelsedatum = Input.Födelsedatum;
+                Anvandare.Födelsedatum = Input.Födelsedatum;
+            }
+            if (Input.BildNamn != Anvandare.BildNamn)
+            {
+                Anvandare.BildNamn = Input.BildNamn;
             }
 
-
-            await _userManager.UpdateAsync(user);
-            await _signInManager.RefreshSignInAsync(user);
+            await _userManager.UpdateAsync(Anvandare);
+            await _signInManager.RefreshSignInAsync(Anvandare);
             StatusMessage = "Din profil har uppdaterats!";
             return RedirectToPage();
         }
