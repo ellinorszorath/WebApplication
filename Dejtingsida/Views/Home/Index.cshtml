@@ -2,6 +2,11 @@
 @{
     ViewData["Title"] = "Home Page";
 }
+@using Microsoft.AspNetCore.Identity
+@using Datalager.Models;
+@using Dejtingsida.Models;
+@using Datalager;
+@inject UserManager<Registrerad> _userManager
 <link rel="stylesheet" href="~/css/Start.css" />
 <link href="https://fonts.googleapis.com/css2?family=Lobster+Two&display=swap" rel="stylesheet">
 <div class="text-center">
@@ -14,26 +19,26 @@
     <!-- Ifall inga användare hittas skriv ut felmeddelande-->
     @if (Model != null)
 
-        @foreach (var registrerad in Model)
+        @for (int index = 0; (index < _userManager.Users.Count() && index < 3); index++)
         {
-            <li>
-                <div class="flex">
+            var registrerad = _userManager.Users.ToList()[index];
+            <div class="flex">
                     <div class="exempelperson">
-                        <img class="profilbild" src="@registrerad.Bild" alt="Bild saknas" />
-                        <a asp-area="" asp-controller="Home" asp-action="Anvandare" asp-route-id="@registrerad.Id" class="Namn"> @registrerad.Användarnamn</a>
+                        <img class="profilbild" src="@registrerad.BildNamn" alt="Bild saknas" />
+                        <a href="/Profil/@registrerad.Id" class="Profil">@registrerad.Förnamn  @registrerad.Efternamn</a>
                     </div>
                 </div>
-            </li>
+           
         }
         else
         {
-        <div class="container">
-            <div class="row" style="margin-top: 2em;">
-                <div class="col-12">
-                    <h3 style="text-align:center;">Testa null</h3>
+            <div class="container">
+                <div class="row" style="margin-top: 2em;">
+                    <div class="col-12">
+                        <h3 style="text-align:center;">Testa null</h3>
+                    </div>
                 </div>
             </div>
-        </div>
         }
 }
 catch (Exception)
