@@ -1,0 +1,120 @@
+﻿@model VännerViewModel
+@using Microsoft.AspNetCore.Identity
+@using Datalager
+@using Datalager.Models
+@inject UserManager<Registrerad> _userManager
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery AntiForgery
+
+@{
+    ViewData["Title"] = "Dina vänförfrågningar";
+}
+@functions {
+    public string GetAntiForgeryToken()
+    {
+        return AntiForgery.GetAndStoreTokens(Context).RequestToken;
+    }
+}
+
+@if (Model.Vänförfrågningar.Count() >= 1)
+{
+    <h1>Det finns @Model.Vänförfrågningar.Count() nya vänförfrågningar</h1>
+
+    <div class="row">
+        <ul class="list-unstyled">
+            @foreach (var vänförfrågan in Model.Vänförfrågningar)
+            {
+
+                <li class="media m-3">
+                    <img class="card-img-top mx-auto profile-image-large"
+                         src="@_userManager.FindByIdAsync(vänförfrågan.FörfrågareID).Result.BildNamn"
+                         alt="Picture of @_userManager.FindByIdAsync(vänförfrågan.FörfrågareID).Result.Förnamn" />
+
+                    <div class="media-body m-2">
+
+                        <h5>@_userManager.FindByIdAsync(vänförfrågan.FörfrågareID).Result.Förnamn</h5>
+
+                        <a class="btn btn-outline-primary btn-sm" href="/Profile/@_userManager.FindByIdAsync(vänförfrågan.FörfrågareID).Result.Id">Visa profil<br></a>
+
+                        <button type="button"
+                                class="btn btn-outline-success btn-sm"
+                                id="AccepteraVänförfrågan"
+                                data-value-requester="@vänförfrågan.FörfrågareID"
+                                data-value-receiver="@vänförfrågan.MottagareID"
+                                onclick="">
+                            Acceptera
+                        </button>
+
+                        <button type="button"
+                                class="btn btn-outline-danger btn-sm"
+                                id="AvvisaVänförfrågan"
+                                data-value-requester="@vänförfrågan.FörfrågareID"
+                                data-value-receiver="@vänförfrågan.MottagareID"
+                                onclick="">
+                            Avvisa
+                        </button>
+                    </div>
+                </li>
+
+            }
+        </ul>
+
+    </div>
+
+}
+else
+{
+    <h1 class="align-middle text-center">Du har inga nya vänförfrågningar</h1>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+    $(() =>
+        $("#AccepteraVänförfrågan").click((e) => {
+            e.preventDefault();
+
+            var förfrågare = $('#AccepteraVänförfrågan').attr("data-value-requester");
+            $.ajax({
+                url: "/api/api/accepteraVänförfrågan" + förfrågare,
+                type: "GET",
+                headers:
+                {
+                    "RequestVerificationToken": '@GetAntiForgeryToken()',
+                },
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function () {
+                    location.reload(true);
+                },
+                error: function () {
+                    alert('Något gick fel');
+                }
+            });
+        })
+    );
+
+   $(() =>
+       $("#AvvisaVänförfrågan").click((e) => {
+            e.preventDefault();
+
+           var förfrågareID = $('#AvvisaVänförfrågan').attr("data-value-requester");
+            $.ajax({
+                url: "/api/api/avvisaVänförfrågan" + förfrågareID,
+                type: "GET",
+                headers:
+                {
+                    "RequestVerificationToken": '@GetAntiForgeryToken()',
+                },
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function () {
+                    location.reload(true);
+                },
+                error: function () {
+                    alert('Något gick fel');
+                }
+            });
+        })
+    );
+    </script>
+}
