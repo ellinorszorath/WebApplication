@@ -34,38 +34,19 @@
     <a href="@Url.Action("Index","Vänner")" class="btn btn-primary btn-lg">Mina vänner &raquo;</a>
 
     <h4 class="col-sm-9 float-left text-left">Inlägg</h4>
-    <div class="nyttInlägg">
-        <a class="inlägg">Skriv ett inlägg</a>
-        <textarea class="form-control" rows="5" style="resize:none;" id="postInnehåll"></textarea>
-        <input id="post" type="submit" value="Create" class="btn btn-primary" />
-    </div>
 
-    @*Dont show form if you're viewing your own profile*@
-    @*@if (!Model.User.Id.Equals(_userManager.GetUserId(User)))
-        {
 
-            <span class="col-sm-3 float-right text-right">
-                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target=".newMessageForm" aria-expanded="false" aria-controls="newMessageForm">
-                    Compose new message
-                </button>
-            </span>
+    @if (!Model.Anvandare.Id.Equals(_userManager.GetUserId(User)))
+    {
+        <div class="nyttInlägg">
+            <a class="inlägg">Skriv ett inlägg</a>
+            <textarea class="form-control" rows="5" style="resize:none;" id="postInnehåll"></textarea>
+            <input id="post" type="submit" value="Create" class="btn btn-primary" />
+        </div>
 
-            <div class="clearfix"></div>
 
-            <div class="card m-3 newMessageForm collapse" id="newMessageForm">
-                <form method="get" aria-expanded="false">
-                    <div class="form-group">
-                        <textarea id="messageContent" class="p-1 form-control"></textarea>
-                        <span id="errorMessage" class="text-danger pl-2 pt-2" style="display:none">The message can not be empty...</span>
-                        <div class="clearfix"></div>
-                        <input class="float-right submitNewMessage btn btn-outline-primary m-2 p-2" type="submit" value="Send" />
-
-                    </div>
-                </form>
-            </div>
-
-        }
-        <div class="clearfix"></div>*@
+    }
+    <div class="clearfix"></div>
 
     @section Scripts {
         <script>
