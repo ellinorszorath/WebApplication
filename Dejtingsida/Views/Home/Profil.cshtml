@@ -9,47 +9,69 @@
 @inject UserManager<Registrerad> _userManager
 @inject DejtingContext _DejtingContext
 @inject Microsoft.AspNetCore.Antiforgery.IAntiforgery AntiForgery
-@*Profile content*@
-<link rel="stylesheet" href="~/css/Start.css" />
-<div class="container-fluid mt-3">
-    <div class="row col-sm-2 float-right">
-        <img src="@Model.Anvandare.BildNamn" class="img-thumbnail rounded float-right mx-auto profile-image-large">
-    </div>
-    <div class="col-sm-10 float-left">
-        <dl class="row float-left">
-            <dt class="col-sm-3">Förnamn</dt>
-            <dd class="col-sm-7">@Model.Anvandare.Förnamn</dd>
 
-            <dt class="col-sm-3">Efternamn</dt>
-            <dd class="col-sm-7">@Model.Anvandare.Efternamn</dd>
-
-            <dt class="col-sm-3">Född år:</dt>
-            <dd class="col-sm-7">@Model.Anvandare.Födelsedatum.ToString("yyyy")</dd>
-
-        </dl>
-    </div>
-
-    <div class="clearfix"></div>
-
-    <a href="@Url.Action("Index","Vänner")" class="btn btn-primary btn-lg">Mina vänner &raquo;</a>
-
-    <h4 class="col-sm-9 float-left text-left">Inlägg</h4>
-
-
-    @if (!Model.Anvandare.Id.Equals(_userManager.GetUserId(User)))
+@functions {
+    public string GetAntiForgeryToken()
     {
-        <div class="nyttInlägg">
-            <a class="inlägg">Skriv ett inlägg</a>
-            <textarea class="form-control" rows="5" style="resize:none;" id="postInnehåll"></textarea>
-            <input id="post" type="submit" value="Create" class="btn btn-primary" />
+        return AntiForgery.GetAndStoreTokens(Context).RequestToken;
+    } 
+}
+
+    @*Profile content*@
+    <link rel="stylesheet" href="~/css/Start.css" />
+    <div class="container-fluid mt-3">
+        <div class="row col-sm-2 float-right">
+            <img src="@Model.Anvandare.BildNamn" class="img-thumbnail rounded float-right mx-auto profile-image-large">
+        </div>
+        <div class="col-sm-10 float-left">
+            <dl class="row float-left">
+                <dt class="col-sm-3">Förnamn</dt>
+                <dd class="col-sm-7">@Model.Anvandare.Förnamn</dd>
+
+                <dt class="col-sm-3">Efternamn</dt>
+                <dd class="col-sm-7">@Model.Anvandare.Efternamn</dd>
+
+                <dt class="col-sm-3">Född år:</dt>
+                <dd class="col-sm-7">@Model.Anvandare.Födelsedatum.ToString("yyyy")</dd>
+
+            </dl>
         </div>
 
+        <div class="clearfix"></div>
 
-    }
-    <div class="clearfix"></div>
+        @if (Model.Anvandare.Id.Equals(_userManager.GetUserId(User)))
+        {
+            <a href="@Url.Action("Index", "Vänner")" class="btn btn-primary btn-lg">Mina vänner &raquo;</a>
+        }
 
-    @section Scripts {
-        <script>
+        else if (!Model.Anvandare.Id.Equals(_userManager.GetUserId(User)))
+        {
+            <button type="button"
+                    class="btn btn-outline-info btn-sm"
+                    id="skicka"
+                    data-value-user="@Model.Anvandare.Id"
+                    onclick="">
+                Skicka vänförfrågan
+            </button>
+        }
+
+        <h4 class="col-sm-9 float-left text-left">Inlägg</h4>
+
+
+        @if (!Model.Anvandare.Id.Equals(_userManager.GetUserId(User)))
+        {
+            <div class="nyttInlägg">
+                <a class="inlägg">Skriv ett inlägg</a>
+                <textarea class="form-control" rows="5" style="resize:none;" id="postInnehåll"></textarea>
+                <input id="post" type="submit" value="Create" class="btn btn-primary" />
+            </div>
+
+
+        }
+        <div class="clearfix"></div>
+
+        @section Scripts {
+            <script>
             var Inlägg = @Html.Raw(Json.Serialize(Model));
             var Message = $("#postInnehåll");
         $(() =>
@@ -65,5 +87,29 @@
                 });
             }));
 
-        </script>
-    }
+
+             $(() =>
+            $("#skicka").click((e) => {
+            e.preventDefault();
+
+                var mottagare = $('#send').attr("data-value-user");
+            $.ajax({
+                url: "/api/api/SkickaVänförfrågan" + mottagare,
+                type: "GET",
+                headers:
+                {
+                    "RequestVerificationToken": '@GetAntiForgeryToken()',
+                },
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function () {
+                    location.reload(true);
+                },
+                error: function () {
+                    alert('Gick ej att skicka');
+                }
+            });
+        })
+    );
+            </script>
+        }
