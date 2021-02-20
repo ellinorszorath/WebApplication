@@ -9,29 +9,51 @@
 @inject UserManager<Registrerad> _userManager
 @inject DejtingContext _DejtingContext
 @inject Microsoft.AspNetCore.Antiforgery.IAntiforgery AntiForgery
-@*Profile content*@
-<link rel="stylesheet" href="~/css/Start.css" />
-<div class="container-fluid mt-3">
-    <div class="row col-sm-2 float-right">
-        <img src="@Model.Anvandare.BildNamn" class="img-thumbnail rounded float-right mx-auto profile-image-large">
-    </div>
-    <div class="col-sm-10 float-left">
-        <dl class="row float-left">
-            <dt class="col-sm-3">Förnamn</dt>
-            <dd class="col-sm-7">@Model.Anvandare.Förnamn</dd>
 
-            <dt class="col-sm-3">Efternamn</dt>
-            <dd class="col-sm-7">@Model.Anvandare.Efternamn</dd>
+@functions {
+    public string GetAntiForgeryToken()
+    {
+        return AntiForgery.GetAndStoreTokens(Context).RequestToken;
+    } 
+}
 
-            <dt class="col-sm-3">Född år:</dt>
-            <dd class="col-sm-7">@Model.Anvandare.Födelsedatum.ToString("yyyy")</dd>
+    @*Profile content*@
+    <link rel="stylesheet" href="~/css/Start.css" />
+    <div class="container-fluid mt-3">
+        <div class="row col-sm-2 float-right">
+            <img src="@Model.Anvandare.BildNamn" class="img-thumbnail rounded float-right mx-auto profile-image-large">
+        </div>
+        <div class="col-sm-10 float-left">
+            <dl class="row float-left">
+                <dt class="col-sm-3">Förnamn</dt>
+                <dd class="col-sm-7">@Model.Anvandare.Förnamn</dd>
 
-        </dl>
-    </div>
+                <dt class="col-sm-3">Efternamn</dt>
+                <dd class="col-sm-7">@Model.Anvandare.Efternamn</dd>
 
-    <div class="clearfix"></div>
+                <dt class="col-sm-3">Född år:</dt>
+                <dd class="col-sm-7">@Model.Anvandare.Födelsedatum.ToString("yyyy")</dd>
 
-    <a href="@Url.Action("Index","Vänner")" class="btn btn-primary btn-lg">Mina vänner &raquo;</a>
+            </dl>
+        </div>
+
+        <div class="clearfix"></div>
+
+        @if (Model.Anvandare.Id.Equals(_userManager.GetUserId(User)))
+        {
+            <a href="@Url.Action("Index", "Vänner")" class="btn btn-primary btn-lg">Mina vänner &raquo;</a>
+        }
+
+        else if (!Model.Anvandare.Id.Equals(_userManager.GetUserId(User)))
+        {
+            <button type="button"
+                    class="btn btn-outline-info btn-sm"
+                    id="skicka"
+                    data-value-user="@Model.Anvandare.Id"
+                    onclick="">
+                Skicka vänförfrågan
+            </button>
+        }
 
     <h4 class="col-sm-9 float-left text-left">Inlägg</h4>
     <div class="nyttInlägg">
@@ -39,40 +61,14 @@
         <textarea class="form-control" rows="5" style="resize:none;" id="postInnehåll"></textarea>
         <input id="post" type="submit" value="Create" class="btn btn-primary" />
     </div>
-    <div>
-        <input id="test" type="submit" value="Testa db" class="btn btn-primary" onclick="location.href='@Url.Action("/api/api/post" )'"/>
-    </div>
 
-    @*Dont show form if you're viewing your own profile*@
-    @*@if (!Model.User.Id.Equals(_userManager.GetUserId(User)))
-        {
-
-            <span class="col-sm-3 float-right text-right">
-                <button class="btn btn-primary" type="button" data-toggle="collapse" data-target=".newMessageForm" aria-expanded="false" aria-controls="newMessageForm">
-                    Compose new message
-                </button>
-            </span>
-
-            <div class="clearfix"></div>
-
-            <div class="card m-3 newMessageForm collapse" id="newMessageForm">
-                <form method="get" aria-expanded="false">
-                    <div class="form-group">
-                        <textarea id="messageContent" class="p-1 form-control"></textarea>
-                        <span id="errorMessage" class="text-danger pl-2 pt-2" style="display:none">The message can not be empty...</span>
-                        <div class="clearfix"></div>
-                        <input class="float-right submitNewMessage btn btn-outline-primary m-2 p-2" type="submit" value="Send" />
-
-                    </div>
-                </form>
-            </div>
 
         }
-        <div class="clearfix"></div>*@   
+        <div class="clearfix"></div>
 
-    @section Scripts {
-        <script>
-            var Inlägg = @Html.Raw(Json.Serialize(Model.Inlägg));
+        @section Scripts {
+            <script>
+            var Inlägg = @Html.Raw(Json.Serialize(Model));
             var Message = $("#postInnehåll");
         $(() =>
             $("#post").click(() => {
@@ -87,5 +83,29 @@
                 });
             }));
 
-        </script>
-    }
+
+             $(() =>
+            $("#skicka").click((e) => {
+            e.preventDefault();
+
+                var mottagare = $('#send').attr("data-value-user");
+            $.ajax({
+                url: "/api/api/SkickaVänförfrågan" + mottagare,
+                type: "GET",
+                headers:
+                {
+                    "RequestVerificationToken": '@GetAntiForgeryToken()',
+                },
+                contentType: "application/json; charset=utf-8",
+                dataType: "json",
+                success: function () {
+                    location.reload(true);
+                },
+                error: function () {
+                    alert('Gick ej att skicka');
+                }
+            });
+        })
+    );
+            </script>
+        }

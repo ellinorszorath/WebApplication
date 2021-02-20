@@ -82,7 +82,7 @@ namespace Dejtingsida.Areas.Identity.Pages.Account.Manage
             var Anvandare = await _userManager.GetUserAsync(User);
             if (Anvandare == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound($"Kunde inte hämta information om användare: '{_userManager.GetUserId(User)}'.");
             }
 
             if (!ModelState.IsValid)
