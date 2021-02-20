@@ -9,20 +9,12 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Datalager.Models;
-using Datalager;
 using System.Security.Claims;
-using Dejtingsida.Models;
 using Dejtingsida.Viewmodels;
-using System.Threading.Tasks;
 
 namespace Dejtingsida.Controllers
 {

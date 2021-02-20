@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Migrations;
+using System;
 
 namespace Datalager.Migrations
 {
@@ -12,23 +13,15 @@ namespace Datalager.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    MottagareId = table.Column<string>(nullable: true)
+                    MottagareID = table.Column<string>(nullable: true),
+                    FörfrågareID = table.Column<string>(nullable: true),
+                    FörfrågningsDatum = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Accepterad = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Vänförfrågning", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Vänförfrågning_AspNetUsers_MottagareId",
-                        column: x => x.MottagareId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Vänförfrågning_MottagareId",
-                table: "Vänförfrågning",
-                column: "MottagareId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

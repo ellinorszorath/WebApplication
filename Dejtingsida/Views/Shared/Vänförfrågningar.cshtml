@@ -1,0 +1,42 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Datalager.Models;
+;
+
+@inject SignInManager<Registrerad> _signInManager
+@inject UserManager<Registrerad> _userManager
+@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery AntiForgery
+
+@functions {
+    public string GetAntiForgeryToken()
+    {
+        return AntiForgery.GetAndStoreTokens(Context).RequestToken;
+    }
+}
+
+<a class="nav-link" asp-controller="Vänner" asp-action="Vänförfrågningar">
+    <span id="friendRequests" class="badge badge-pill badge-info">Du har inga nya vänförfrågningar</span>
+</a>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $.ajax({
+            url: "/api/api/räknaVänförfrågningar",
+            type: "GET",
+            headers:
+            {
+                "RequestVerificationToken": '@GetAntiForgeryToken()',
+            },
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (räknaVänförfrågningar) {
+                if (räknaVänförfrågningar > 0) {
+                    $('#vänförfrågningar').text('Du har ' + räknaVänförfrågningar + ' vänförfrågningar');
+                }
+            },
+            error: function () {
+                alert('Något gick fel');
+            }
+        });
+    });
+</script>
