@@ -39,6 +39,9 @@
         <textarea class="form-control" rows="5" style="resize:none;" id="postInnehåll"></textarea>
         <input id="post" type="submit" value="Create" class="btn btn-primary" />
     </div>
+    <div>
+        <input id="test" type="submit" value="Testa db" class="btn btn-primary" onclick="location.href='@Url.Action("/api/api/post" )'"/>
+    </div>
 
     @*Dont show form if you're viewing your own profile*@
     @*@if (!Model.User.Id.Equals(_userManager.GetUserId(User)))
@@ -65,11 +68,11 @@
             </div>
 
         }
-        <div class="clearfix"></div>*@
+        <div class="clearfix"></div>*@   
 
     @section Scripts {
         <script>
-            var Inlägg = @Html.Raw(Json.Serialize(Model));
+            var Inlägg = @Html.Raw(Json.Serialize(Model.Inlägg));
             var Message = $("#postInnehåll");
         $(() =>
             $("#post").click(() => {
@@ -80,7 +83,7 @@
                     data: JSON.stringify(Inlägg),
                     contentType: "application/json; charset=utf-8",
                     dataType: "json",
-                    success: alert("Inlägg skapat")
+                    success: alert(Message)
                 });
             }));
 

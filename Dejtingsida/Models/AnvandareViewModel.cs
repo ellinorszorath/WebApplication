@@ -9,5 +9,8 @@ namespace Dejtingsida.Viewmodels
     public class AnvandareViewModel
     {
         public Registrerad Anvandare { get; set; }
+        public string Inlägg { get; set; }
     }
+    
+
 }
