@@ -9,7 +9,6 @@
 @inject UserManager<Registrerad> _userManager
 @inject DejtingContext _DejtingContext
 @inject Microsoft.AspNetCore.Antiforgery.IAntiforgery AntiForgery
-
 @*Profile content*@
 <link rel="stylesheet" href="~/css/Start.css" />
 <div class="container-fluid mt-3">
@@ -33,6 +32,11 @@
     <div class="clearfix"></div>
 
     <h4 class="col-sm-9 float-left text-left">Inlägg</h4>
+    <div class="nyttInlägg">
+        <a class="inlägg">Skriv ett inlägg</a>
+        <textarea class="form-control" rows="5" style="resize:none;" id="postInnehåll"></textarea>
+        <input id="post" type="submit" value="Create" class="btn btn-primary" />
+    </div>
 
     @*Dont show form if you're viewing your own profile*@
     @*@if (!Model.User.Id.Equals(_userManager.GetUserId(User)))
@@ -60,3 +64,23 @@
 
         }
         <div class="clearfix"></div>*@
+
+    @section Scripts {
+        <script>
+            var Inlägg = @Html.Raw(Json.Serialize(Model));
+            var Message = $("#postInnehåll");
+        $(() =>
+            $("#post").click(() => {
+                $.ajax({
+                    message: $("#postInnehåll").val,
+                    url: "/api/api/post",
+                    type: "POST",
+                    data: JSON.stringify(Inlägg),
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: alert("Inlägg skapat")
+                });
+            }));
+
+        </script>
+    }
