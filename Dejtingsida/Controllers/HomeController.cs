@@ -38,8 +38,6 @@ namespace Dejtingsida.Controllers
 
             var användare = användareProfiler.Select(a => new Registrerad
             {
-                Användarnamn = a.UserName,
-                Lösenord = a.PasswordHash,
                 Förnamn = a.Förnamn,
                 Efternamn = a.Efternamn
             }).ToList();
