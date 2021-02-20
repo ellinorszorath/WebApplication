@@ -34,6 +34,7 @@ namespace Dejtingsida.Controllers
 
         public IActionResult Index()
         {
+            
             List<Registrerad> användareProfiler = _dejtingContext.Registrering.ToList();
 
             var användare = användareProfiler.Select(a => new Registrerad
@@ -42,6 +43,7 @@ namespace Dejtingsida.Controllers
                 Efternamn = a.Efternamn
             }).ToList();
             return View(användare);
+            
         }
         //[Authorize]
         //public IActionResult Profil()
@@ -86,13 +88,13 @@ namespace Dejtingsida.Controllers
             {
                 ClaimsPrincipal claim = this.User;
                 Registrerad user = _userManager.GetUserAsync(claim).Result;
-                AnvandareViewModel model = new AnvandareViewModel()
-                {
-                    Anvandare = user,
-                };
+                //Registrerad model = new Registrerad()
+                //{
+                //    Användare = user,
+                //};
 
 
-                return View(model);
+                return View(user);
             }
             catch (Exception ex)
             {
@@ -112,11 +114,11 @@ namespace Dejtingsida.Controllers
             {
                
                 user = _userManager.FindByIdAsync(Id).Result;
-                AnvandareViewModel model = new AnvandareViewModel()
-                {
-                    Anvandare = user
-                };
-                return View(model);
+                //AnvandareViewModel model = new AnvandareViewModel()
+                //{
+                //    Anvandare = user
+                //};
+                return View(user);
             }
             else
             {

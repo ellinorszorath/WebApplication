@@ -8,8 +8,12 @@ namespace Dejtingsida.Viewmodels
 {
     public class AnvandareViewModel
     {
-        public Registrerad Anvandare { get; set; }
-        public string Inlägg { get; set; }
+        public virtual Registrerad Anvandare { get; set; }
+        public virtual Inlägg Inlägg { get; set; }
+        public string Förnamn { get; set; }
+        public string Efternamn { get; set; }
+        public DateTime Födelsedatum { get; set; }
+        public string BildNamn { get; set; }
     }
     
 
