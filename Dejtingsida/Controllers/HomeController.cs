@@ -45,26 +45,13 @@ namespace Dejtingsida.Controllers
             return View(användare);
             
         }
-        //[Authorize]
-        //public IActionResult Profil()
-        //{
-        //    return View();
-        //}
+
         [Authorize]
         public IActionResult _LoginPartial()
         {
             return View();
         }
-        [Authorize]
-        public IActionResult Registrera()
-        {
-            return View();
-        }
-        [Authorize]
-        public IActionResult Anvandare()
-        {
-            return View();
-        }
+    
         [Authorize]
         public IActionResult Redigera()
         {
@@ -76,10 +63,7 @@ namespace Dejtingsida.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-        public IActionResult Profiltest()
-        {
-            return View();
-        }
+
         [Authorize]
         [Route("Profil")]
         public IActionResult Profil()
@@ -104,7 +88,6 @@ namespace Dejtingsida.Controllers
             }
         }
 
-        //Returns view of a specific profile
         [Authorize]
         [Route("Profil/{Id}")]
         public IActionResult Profil(string Id)
