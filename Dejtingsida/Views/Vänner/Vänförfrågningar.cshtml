@@ -8,6 +8,7 @@
 @{
     ViewData["Title"] = "Dina vänförfrågningar";
 }
+
 @functions {
     public string GetAntiForgeryToken()
     {
@@ -77,10 +78,6 @@ else
             $.ajax({
                 url: "/api/api/accepteraVänförfrågan" + förfrågare,
                 type: "GET",
-                headers:
-                {
-                    "RequestVerificationToken": '@GetAntiForgeryToken()',
-                },
                 contentType: "application/json; charset=utf-8",
                 dataType: "json",
                 success: function () {

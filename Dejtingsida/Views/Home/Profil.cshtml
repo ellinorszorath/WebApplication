@@ -92,7 +92,7 @@
             $("#skicka").click((e) => {
             e.preventDefault();
 
-                var mottagare = $('#send').attr("data-value-user");
+                var mottagare = $('#skicka').attr("data-value-user");
             $.ajax({
                 url: "/api/api/SkickaVänförfrågan" + mottagare,
                 type: "GET",
@@ -100,7 +100,7 @@
                 {
                     "RequestVerificationToken": '@GetAntiForgeryToken()',
                 },
-                contentType: "application/json; charset=utf-8",
+                contentType: "application/json",
                 dataType: "json",
                 success: function () {
                     location.reload(true);

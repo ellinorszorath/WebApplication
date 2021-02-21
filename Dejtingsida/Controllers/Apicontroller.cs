@@ -146,12 +146,12 @@ namespace Dejtingsida.Controllers
             try
             {
                 var inloggadAnvändare = (ClaimsIdentity)User.Identity;
-                string AnvID = inloggadAnvändare.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
+                string användare = inloggadAnvändare.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
 
                 IEnumerable<Vänförfrågning> Vänförfrågning =
-                _dejtingContext.Vänförfrågning.Where(förfrågan => ((förfrågan.MottagareID.Equals(AnvID) && 
+                _dejtingContext.Vänförfrågning.Where(förfrågan => ((förfrågan.MottagareID.Equals(användare) && 
                 förfrågan.FörfrågareID.Equals(anvID)) | (förfrågan.MottagareID.Equals(anvID) && 
-                förfrågan.FörfrågareID.Equals(AnvID))));
+                förfrågan.FörfrågareID.Equals(användare))));
 
                 foreach (Vänförfrågning vän in Vänförfrågning)
                 {

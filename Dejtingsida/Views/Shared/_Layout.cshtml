@@ -31,20 +31,20 @@
                             <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
                         </li>
                         @*<li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Registrera dig</a> //Vet inte om vi behöver ha registrera som en knapp när det finns en länk på loginsidan
-                        </li>*@
-                            <div class=" sökbar">
-                                <ul class="navbar-nav flex-grow-1">
-                                    <li class="nav-item">
-                                        <input type="text" name="sök" placeholder="Sök efter användare..">
-                                    </li>
-                                    <li class="nav-item">
-                                        <button class="sök" onclick="sök">Sök</button>
-                                    </li>
-                                </ul>
-                            </div>
+                                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Registrera dig</a> //Vet inte om vi behöver ha registrera som en knapp när det finns en länk på loginsidan
+                            </li>*@
+                        <div class=" sökbar">
+                            <ul class="navbar-nav flex-grow-1">
+                                <li class="nav-item">
+                                    <input type="text" name="sök" placeholder="Sök efter användare..">
+                                </li>
+                                <li class="nav-item">
+                                    <button class="sök" onclick="sök">Sök</button>
+                                </li>
+                            </ul>
+                        </div>
                     </ul>
-            </div>
+                </div>
         </nav>
         <ul class="navbar-nav">
             @if (SignInManager.IsSignedIn(User))
@@ -57,10 +57,13 @@
                         <button type="submit" class="nav-link btn btn-link text-dark">Logga ut</button>
                     </form>
                 </li>
+
+                <a class="nav-link" asp-controller="Vänner" asp-action="Vänförfrågningar"> <span id="vänförfrågningar" class="badge badge-pill badge-info">Du har inga nya vänförfrågningar</span>
+                </a>
             }
             else
             {
-                
+
             }
         </ul>
     </header>
@@ -94,5 +97,24 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script>
+    $(document).ready(function () {
+        $.ajax({
+            url: "/api/api/räknaVänförfrågningar",
+            type: "GET",
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function (räknaVänförfrågningar) {
+                if (räknaVänförfrågningar > 0) {
+                    $('#vänförfrågningar').text('Du har ' + räknaVänförfrågningar + ' vänförfrågningar');
+                }
+            },
+            error: function () {
+                alert('Något gick fel');
+            }
+        });
+    });
+    </script>
 </body>
 </html>

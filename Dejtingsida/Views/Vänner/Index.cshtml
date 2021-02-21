@@ -20,7 +20,7 @@
 <h4>Mina vänner</h4>
 @if (Model.Vänförfrågningar.Any())
 {
-    @*<strong>@_userManager.Users.Where(x => x.Id.Equals(Model.Registrerad)).Select(x => x.Förnamn).FirstOrDefault().Split()[0] have @Model.Vänförfrågningar.Count() friend(s).</strong>*@
+    <strong>Du har @Model.Vänförfrågningar.Count() vänner.</strong>
 
     <div class="row">
         <ul class="list-unstyled">
@@ -49,7 +49,7 @@
                             }
                         </h5>
 
-                        <a class="btn btn-outline-primary" href="/Profile/@vänID">Visa profil<br></a>
+                        <a class="btn btn-outline-primary" href="/Home/Profil/@vänID">Visa profil<br></a>
 
                         @{ if (Model.Registrerad.Equals(_userManager.GetUserId(User)))
                             {
@@ -74,7 +74,7 @@ else
 }
 
 <div>
-    <a asp-action="Index">Tillbaka till startsidan</a>
+    <a href="/Home/Index"> Tillbaka till startsidan </a>
 </div>
 
 
@@ -82,24 +82,24 @@ else
     <partial name="_ValidationScriptsPartial" />
     <script>
     $(() =>
-        $(".taBortVän").click((event) => {
+        $(".remove").click((event) => {
             event.preventDefault();
 
-            var anvID = $('.taBortVän').attr("data-value-user");
+            var anvID = $('.remove').attr("data-value-user");
             $.ajax({
-                url: "/api/api/taBortVän" + anvID,
+                url: "../api/api/taBortVän" + anvID,
                 type: "GET",
                 headers:
                 {
                     "RequestVerificationToken": '@GetAntiForgeryToken()',
                 },
-                contentType: "application/json; charset=utf-8",
+                contentType: "application/json",
                 dataType: "json",
                 success: function () {
                     location.reload(true);
                 },
                 error: function () {
-                    alert('Något gick fel');
+                    alert('Något gick fel!');
                 }
             });
         })
