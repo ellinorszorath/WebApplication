@@ -32,29 +32,23 @@ namespace Dejtingsida.Controllers
 
         }
         [HttpPost]
-        [Route("post")]
-        public void SkickaPost(Datalager.Models.Inlägg meddelande)
+        [Route("skickapost")]
+        public void SkickaPost(Inlägg meddelande)
         {
-            if (meddelande is null)
-            {
-                throw new ArgumentNullException(nameof(meddelande));
-            }
-
             try
             {
                 var inlaggMeddelande = meddelande.Message;
                 var inlaggMottagare = meddelande.MottagareID;
-                var inlaggAvsändare = meddelande.SkickareID;
                 var inlaggTid = DateTime.UtcNow;
-                int inlaggId = meddelande.Id;
+                //var inlaggSkickare = meddelande.SkickareID;
+                
 
                 _dejtingContext.Inlägg.Add(new Datalager.Models.Inlägg
                 {
                     Message = inlaggMeddelande,
-                    SkickareID = inlaggAvsändare,
-                    MottagareID = inlaggMottagare,
+                    MottagareID = meddelande.MottagareID,
                     Skapad = inlaggTid,
-                    Id = inlaggId
+                    //SkickareID = inlaggSkickare
                 });
                 _dejtingContext.SaveChanges();
             }

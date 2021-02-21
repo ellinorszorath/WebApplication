@@ -34,6 +34,7 @@ namespace Dejtingsida.Controllers
 
         public IActionResult Index()
         {
+            
             List<Registrerad> användareProfiler = _dejtingContext.Registrering.ToList();
 
             var användare = användareProfiler.Select(a => new Registrerad
@@ -42,27 +43,15 @@ namespace Dejtingsida.Controllers
                 Efternamn = a.Efternamn
             }).ToList();
             return View(användare);
+            
         }
-        //[Authorize]
-        //public IActionResult Profil()
-        //{
-        //    return View();
-        //}
+
         [Authorize]
         public IActionResult _LoginPartial()
         {
             return View();
         }
-        [Authorize]
-        public IActionResult Registrera()
-        {
-            return View();
-        }
-        [Authorize]
-        public IActionResult Anvandare()
-        {
-            return View();
-        }
+    
         [Authorize]
         public IActionResult Redigera()
         {
@@ -74,10 +63,7 @@ namespace Dejtingsida.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-        public IActionResult Profiltest()
-        {
-            return View();
-        }
+
         [Authorize]
         [Route("Profil")]
         public IActionResult Profil()
@@ -86,13 +72,13 @@ namespace Dejtingsida.Controllers
             {
                 ClaimsPrincipal claim = this.User;
                 Registrerad user = _userManager.GetUserAsync(claim).Result;
-                AnvandareViewModel model = new AnvandareViewModel()
-                {
-                    Anvandare = user,
-                };
+                //Registrerad model = new Registrerad()
+                //{
+                //    Användare = user,
+                //};
 
 
-                return View(model);
+                return View(user);
             }
             catch (Exception ex)
             {
@@ -102,7 +88,6 @@ namespace Dejtingsida.Controllers
             }
         }
 
-        //Returns view of a specific profile
         [Authorize]
         [Route("Profil/{Id}")]
         public IActionResult Profil(string Id)
@@ -112,11 +97,11 @@ namespace Dejtingsida.Controllers
             {
                
                 user = _userManager.FindByIdAsync(Id).Result;
-                AnvandareViewModel model = new AnvandareViewModel()
-                {
-                    Anvandare = user
-                };
-                return View(model);
+                //AnvandareViewModel model = new AnvandareViewModel()
+                //{
+                //    Anvandare = user
+                //};
+                return View(user);
             }
             else
             {
