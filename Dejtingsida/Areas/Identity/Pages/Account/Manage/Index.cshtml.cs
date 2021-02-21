@@ -23,7 +23,7 @@ namespace Dejtingsida.Areas.Identity.Pages.Account.Manage
             _signInManager = signInManager;
         }
 
-        public string Username { get; set; }
+        public string anvandarNamn { get; set; }
 
         [TempData]
         public string StatusMessage { get; set; }
@@ -33,47 +33,44 @@ namespace Dejtingsida.Areas.Identity.Pages.Account.Manage
 
         public class InputModel
         {
-            [Phone]
-            [Display(Name = "Phone number")]
-            public string PhoneNumber { get; set; }
-            
+            [Required]
             [Display(Name = "Förnamn")]
             public string Förnamn { get; set; }
-           
+            [Required]
             [Display(Name = "Efternamn")]
             public string Efternamn { get; set; }
+            [Required]
             [Display (Name = "Födelsedatum")]
             public DateTime Födelsedatum { get; set; }
-            [Display(Name = "URL")]
+            [Required]
+            [Display(Name = "BildURL")]
             public string BildNamn { get; set; }
-
-
         }
 
-        private async Task LoadAsync(Registrerad user)
+        private async Task LoadAsync(Registrerad Anvandare)
         {
-            var userName = await _userManager.GetUserNameAsync(user);
-            var phoneNumber = await _userManager.GetPhoneNumberAsync(user);
+            var AnvandarNamn = await _userManager.GetUserNameAsync(Anvandare);
 
-            Username = userName;
+            anvandarNamn = AnvandarNamn;
 
             Input = new InputModel
             {
-                PhoneNumber = phoneNumber,
-                Förnamn = user.Förnamn,
-                Efternamn = user.Efternamn
+                Förnamn = Anvandare.Förnamn,
+                Efternamn = Anvandare.Efternamn,
+                Födelsedatum = Anvandare.Födelsedatum,
+                BildNamn = Anvandare.BildNamn
             };
         }
 
         public async Task<IActionResult> OnGetAsync()
         {
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
+            var Anvandare = await _userManager.GetUserAsync(User);
+            if (Anvandare == null)
             {
-                return NotFound($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                return NotFound($"Kunde inte hämta information om användare:'{_userManager.GetUserId(User)}'.");
             }
 
-            await LoadAsync(user);
+            await LoadAsync(Anvandare);
             return Page();
         }
 
