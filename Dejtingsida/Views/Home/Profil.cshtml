@@ -71,8 +71,8 @@
                     var inlägg =
                     {
                         message: $("#postInnehåll").val(),
-                        mottagareID:@Model.Id
-                        skickareID: @_userManager.GetUserId(User)
+                        mottagareID:"@Model.Id"
+                        @*skickareID: @_userManager.GetUserId(User)*@
                     };
         $(() =>
             $("#post").click(() => {
@@ -82,7 +82,7 @@
                     url: "/api/api/skickapost",
                     contentType: "application/json; charset=utf-8",
                     data: JSON.stringify(inlägg),
-                    success: alert(inlägg),
+                    success: alert($("#postInnehåll").val()),
                 });
             }));
 

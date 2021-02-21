@@ -40,7 +40,7 @@ namespace Dejtingsida.Controllers
                 var inlaggMeddelande = meddelande.Message;
                 var inlaggMottagare = meddelande.MottagareID;
                 var inlaggTid = DateTime.UtcNow;
-                var inlaggSkickare = meddelande.SkickareID;
+                //var inlaggSkickare = meddelande.SkickareID;
                 
 
                 _dejtingContext.Inlägg.Add(new Datalager.Models.Inlägg
@@ -48,7 +48,7 @@ namespace Dejtingsida.Controllers
                     Message = inlaggMeddelande,
                     MottagareID = meddelande.MottagareID,
                     Skapad = inlaggTid,
-                    SkickareID = inlaggSkickare
+                    //SkickareID = inlaggSkickare
                 });
                 _dejtingContext.SaveChanges();
             }
