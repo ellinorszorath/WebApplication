@@ -38,16 +38,17 @@ namespace Dejtingsida.Controllers
             try
             {
                 var inlaggMeddelande = meddelande.Message;
-                //var inlaggMottagare = meddelande.MottagareID;
+                var inlaggMottagare = meddelande.MottagareID;
                 var inlaggTid = DateTime.UtcNow;
+                var inlaggSkickare = meddelande.SkickareID;
                 
 
                 _dejtingContext.Inlägg.Add(new Datalager.Models.Inlägg
                 {
                     Message = inlaggMeddelande,
-                    MottagareID = null,
+                    MottagareID = meddelande.MottagareID,
                     Skapad = inlaggTid,
-                    SkickareID = null
+                    SkickareID = inlaggSkickare
                 });
                 _dejtingContext.SaveChanges();
             }

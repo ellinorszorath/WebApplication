@@ -56,37 +56,39 @@
             </button>
         }
 
-    <h4 class="col-sm-9 float-left text-left">Inlägg</h4>
-    <div class="nyttInlägg">
-        <a class="inlägg">Skriv ett inlägg</a>
-        <textarea class="form-control" rows="5" style="resize:none;" id="postInnehåll"></textarea>
-        <input id="post" type="submit" value="Skicka inlägg" class="btn btn-primary" />
-    </div>
+        <h4 class="col-sm-9 float-left text-left">Inlägg</h4>
+        <div class="nyttInlägg">
+            <a class="inlägg">Skriv ett inlägg</a>
+            <textarea id="postInnehåll" class="form-control" rows="5" style="resize:none;"></textarea>
+            <input id="post" type="submit" value="Skicka inlägg" class="btn btn-primary" ) />
+        </div>
 
         <div class="clearfix"></div>
 
         @section Scripts {
-                <script>
-            var registrerad = @Html.Raw(Json.Serialize(Model));
+            <script>
+                    var registrerad = @Html.Raw(Json.Serialize(Model));
+                    var inlägg =
+                    {
+                        message: $("#postInnehåll").val(),
+                        mottagareID:@Model.Id
+                        skickareID: @_userManager.GetUserId(User)
+                    };
         $(() =>
             $("#post").click(() => {
                 $.ajax({
-                    url: "/api/api/skickapost",
                     type: "POST",
-                    data: JSON.stringify({
-                        message: $("#postInnehåll").val(),
-                        mottagareID: @Model.Id
-                        @*skickareID:  @_userManager.GetUserId(User)*@
-                    }),
-                    contentType: "application/json; charset=utf-8",
                     dataType: "json",
-                    success: alert("Det lyckades!"),
+                    url: "/api/api/skickapost",
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(inlägg),
+                    success: alert(inlägg),
                 });
             }));
 
-                </script>
-         <script>
-            
+            </script>
+            <script>
+
              $(() =>
             $("#skicka").click((e) => {
             e.preventDefault();
@@ -110,5 +112,6 @@
             });
         })
     );
-                </script>
+            </script>
+            
         }
