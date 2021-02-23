@@ -35,18 +35,12 @@
         </li>*@
                         @if (SignInManager.IsSignedIn(User))
                         {
-                            <div class=" sökbar">
-                                <ul class="navbar-nav flex-grow-1">
-                                    <li class="nav-item">
-                                        <input type="text" name="sök" placeholder="Sök efter användare..">
-                                    </li>
-                                    <li class="nav-item">
-                                        <a href="@Url.Action("Sök", "Home")" class="btn btn-primary">Sök</a>
-                                    </li>
-                                </ul>
-                            </div>
+                            <form class="form-inline" asp-controller="Home" asp-action="Sök">
+                                <input class="form-control mr-sm-2" type="text" name="Name" placeholder="Sök efter användare.." required>
+                                <input class="btn btn-outline-primary my-2 my-sm-0" type="submit" value="Sök" />
+                            </form>
                         }
-                        </ul>
+                    </ul>
                 </div>
         </nav>
         <ul class="navbar-nav">

@@ -11,7 +11,7 @@
 
 <h1 class="display-4">Sökresultat</h1>
 
-@foreach (var anvandare in _userManager.Users.ToList())
+@foreach (var anvandare in _userManager.Users.ToList()) {
     if (anvandare.Visas)
     {
         <div class="flex">
@@ -19,7 +19,8 @@
                 <img class="profilbild" src="@anvandare.BildNamn" alt="Bild saknas" />
                 <a href="/Profil/@anvandare.Id" class="Profil">@anvandare.Förnamn  @anvandare.Efternamn</a>
             </div>
-        </div>      
-     }
+        </div>   
+}   
+}
 
 
