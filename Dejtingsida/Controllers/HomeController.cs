@@ -109,6 +109,29 @@ namespace Dejtingsida.Controllers
                 return View("Error");
             }
         }
+
+        public IActionResult Sök(string Sok) 
+        {
+            try
+            {
+                var Anvandare = _userManager.Users;
+
+                if (!String.IsNullOrEmpty(Sok))
+                {
+                    Anvandare = Anvandare.Where(u => u.Förnamn.Contains(Sok) && u.Visas == true);
+                }
+
+                return View();
+            }
+            catch (Exception e)
+            {
+
+                Console.WriteLine(e.Message);
+                return View(new ErrorViewModel());
+            }
+
+        }
     }
-}
+    }
+
 
