@@ -58,7 +58,8 @@
                     </form>
                 </li>
 
-                <a class="nav-link" asp-controller="Vänner" asp-action="Vänförfrågningar"> <span id="vänförfrågningar" class="badge badge-pill badge-info">Du har inga nya vänförfrågningar</span>
+                <a class="nav-link" asp-controller="Vänner" asp-action="Vänförfrågningar">
+                    <span id="vänförfrågningar" class="badge badge-pill badge-info">Du har inga nya vänförfrågningar</span>
                 </a>
             }
             else
@@ -96,25 +97,29 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    @await RenderSectionAsync("Scripts", required: false)
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script>
-    $(document).ready(function () {
-        $.ajax({
-            url: "/api/api/räknaVänförfrågningar",
-            type: "GET",
-            contentType: "application/json; charset=utf-8",
-            dataType: "json",
-            success: function (räknaVänförfrågningar) {
-                if (räknaVänförfrågningar > 0) {
-                    $('#vänförfrågningar').text('Du har ' + räknaVänförfrågningar + ' vänförfrågningar');
-                }
-            },
-            error: function () {
-                alert('Något gick fel');
-            }
-        });
-    });
-    </script>
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <script>
+            $(document).ready(function () {
+                $.ajax({
+                    url: "/api/api/räknaVänförfrågningar",
+                    type: "GET",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (räknaVänförfrågningar) {
+                        if (räknaVänförfrågningar > 0) {
+                            $('#vänförfrågningar').text('Du har ' + räknaVänförfrågningar + ' vänförfrågningar');
+                        }
+                    },
+                    error: function () {
+                        alert('Något gick fel');
+                    }
+                });
+            });
+        </script>
+    }
+    @await RenderSectionAsync("Scripts", required: false)
+
 </body>
 </html>

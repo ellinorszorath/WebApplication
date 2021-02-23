@@ -42,7 +42,7 @@
 
         @if (Model.Id.Equals(_userManager.GetUserId(User)))
         {
-            <a href="@Url.Action("Index", "Vänner")" class="btn btn-primary btn-lg">Mina vänner &raquo;</a>
+            <a href="@Url.Action("Index", "Vänner")" class="btn btn-primary">Mina vänner</a>
         }
 
         else if (!Model.Id.Equals(_userManager.GetUserId(User)))
