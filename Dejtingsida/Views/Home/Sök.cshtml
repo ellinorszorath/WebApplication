@@ -1,0 +1,25 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Datalager.Models;
+@using Dejtingsida.Models;
+@using Datalager;
+@{
+    ViewData["Title"] = "Sök";
+}
+@inject UserManager<Registrerad> _userManager
+<link rel="stylesheet" href="~/css/Start.css" />
+<link href="https://fonts.googleapis.com/css2?family=Lobster+Two&display=swap" rel="stylesheet">
+
+<h1 class="display-4">Sökresultat</h1>
+
+@foreach (var anvandare in _userManager.Users.ToList())
+    if (anvandare.Visas)
+    {
+        <div class="flex">
+            <div class="exempelperson">
+                <img class="profilbild" src="@anvandare.BildNamn" alt="Bild saknas" />
+                <a href="/Profil/@anvandare.Id" class="Profil">@anvandare.Förnamn  @anvandare.Efternamn</a>
+            </div>
+        </div>      
+     }
+
+

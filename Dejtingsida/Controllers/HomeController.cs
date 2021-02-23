@@ -109,6 +109,11 @@ namespace Dejtingsida.Controllers
                 return View("Error");
             }
         }
+
+        public IActionResult Sök() 
+        {
+            return View();
+        }
     }
 }
 
