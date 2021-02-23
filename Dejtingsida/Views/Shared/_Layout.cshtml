@@ -31,19 +31,22 @@
                             <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
                         </li>
                         @*<li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Registrera dig</a> //Vet inte om vi behöver ha registrera som en knapp när det finns en länk på loginsidan
-                            </li>*@
-                        <div class=" sökbar">
-                            <ul class="navbar-nav flex-grow-1">
-                                <li class="nav-item">
-                                    <input type="text" name="sök" placeholder="Sök efter användare..">
-                                </li>
-                                <li class="nav-item">
-                                    <a href="@Url.Action("Sök", "Home")" class="btn btn-primary">Sök</a>
-                                </li>
-                            </ul>
-                        </div>
-                    </ul>
+            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Registrera dig</a> //Vet inte om vi behöver ha registrera som en knapp när det finns en länk på loginsidan
+        </li>*@
+                        @if (SignInManager.IsSignedIn(User))
+                        {
+                            <div class=" sökbar">
+                                <ul class="navbar-nav flex-grow-1">
+                                    <li class="nav-item">
+                                        <input type="text" name="sök" placeholder="Sök efter användare..">
+                                    </li>
+                                    <li class="nav-item">
+                                        <a href="@Url.Action("Sök", "Home")" class="btn btn-primary">Sök</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        }
+                        </ul>
                 </div>
         </nav>
         <ul class="navbar-nav">
