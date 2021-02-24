@@ -1,100 +1,37 @@
-﻿@model VännerViewModel
+﻿@model IEnumerable<Datalager.Models.Registrerad>
 @using Datalager.Models
 @using Microsoft.AspNetCore.Identity
 @inject UserManager<Registrerad> _userManager
 
-@{
-    ViewData["Title"] = "Vänsida";
-}
+<link rel="stylesheet" href="~/css/Start.css" />
+<link href="https://fonts.googleapis.com/css2?family=Lobster+Two&display=swap" rel="stylesheet">
 
-<h1>Mina vänner</h1>
+    @{
+        ViewData["Title"] = "Vänsida";
+    }
 
-<h4>Mina vänner</h4>
-@if (Model.Vänförfrågningar.Any())
-{
-    <strong>Du har @Model.Vänförfrågningar.Count() vänner.</strong>
+    <h1>Mina vänner</h1>
 
-    <div class="row">
-        <ul class="list-unstyled">
-            @foreach (var vänförfrågning in Model.Vänförfrågningar)
-            {
-                string vänID = "";
-                if (vänförfrågning.FörfrågareID.Equals(Model.Registrerad))
-                {
-                    vänID = vänförfrågning.MottagareID;
-                }
-                else if (vänförfrågning.MottagareID.Equals(Model.Registrerad))
-                {
-                    vänID = vänförfrågning.FörfrågareID;
-                }
+    <h4>Mina vänner</h4>
 
-                <li class="media m-3">
-                    <img class="card-img-top mx-auto profile-image-large"
-                         src="@_userManager.FindByIdAsync(vänID).Result.BildNamn"
-                         alt="Picture of @_userManager.FindByIdAsync(vänID).Result.Förnamn" />
-                    <div class="media-body m-2">
-                        <h5>
-                            @_userManager.FindByIdAsync(vänID).Result.Förnamn
-                            @if (vänID == _userManager.GetUserId(User))
-                            {
-                                <span class="text-muted">(you)</span>
-                            }
-                        </h5>
+    @foreach (Registrerad anvandare in Model)
+    {
+        <div class="flex">
+            <div class="exempelperson">
+                <img class="profilbild" src="@anvandare.BildNamn" alt="Bild saknas" />
+                <a href="/Profil/@anvandare.Id" class="Profil">@anvandare.Förnamn  @anvandare.Efternamn</a>
+                <div class="col-md-2">
+                    <input type="button" class="btn btn-primary pull-right" id="taBortVän" value="Ta bort vän" onclick="location.href='@Url.Action("TaBortVän", "Vänner", new { id = anvandare.Id})'" />
+                </div>
+            </div>
+        </div>
+    }
 
-                        <a class="btn btn-outline-primary" href="/Home/Profil/@vänID">Visa profil<br></a>
-
-                        @{ if (Model.Registrerad.Equals(_userManager.GetUserId(User)))
-                            {
-                                <button type="button"
-                                        class="remove btn btn-outline-danger"
-                                        id="taBortVän"
-                                        data-value-user="@vänID"
-                                        onclick="">
-                                    Ta bort vän
-                                </button>
-                            }
-                        }
-                    </div>
-                </li>
-            }
-        </ul>
+    <div>
+        <a href="/Home/Index"> Tillbaka till startsidan </a>
     </div>
-}
-else
-{
-    <a>Du har inga vänner</a>
-}
-
-<div>
-    <a href="/Home/Index"> Tillbaka till startsidan </a>
-</div>
 
 
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-    @*<script>
-    $(() =>
-        $(".remove").click((event) => {
-            event.preventDefault();
-
-            var anvID = $('.remove').attr("data-value-user");
-            $.ajax({
-                url: "../api/api/taBortVän" + anvID,
-                type: "GET",
-                headers:
-                {
-                    "RequestVerificationToken": '@GetAntiForgeryToken()',
-                },
-                contentType: "application/json",
-                dataType: "json",
-                success: function () {
-                    location.reload(true);
-                },
-                error: function () {
-                    alert('Något gick fel!');
-                }
-            });
-        })
-    );
-    </script>*@
-}
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }
