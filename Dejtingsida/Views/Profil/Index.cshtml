@@ -9,6 +9,8 @@
 @inject UserManager<Registrerad> _userManager;
 @*Profile content*@
 <link rel="stylesheet" href="~/css/Start.css" />
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <div class="container-fluid mt-3">
     <div class="row col-sm-2 float-right">
         <img src="@Model.Anvandare.BildNamn" class="img-thumbnail rounded float-right mx-auto profile-image-large">
@@ -92,36 +94,36 @@
 
 @section Scripts {
     <script>
-
-        $(() =>
-            $("#post").click(() => {
-                var registrerad = @Html.Raw(Json.Serialize(Model));
-                    var inlägg =
-                    {
-                        message: $("#postInnehåll").val(),
-                        mottagareID:"@Model.Anvandare.Id"
-                    };
-                $.ajax({
-                    "type": "POST",
-                    "url": "/api/api/skickapost",
-                    "data": JSON.stringify(inlägg),
-                    "dataType": "json",
-                    "contentType": "application/json; charset=utf-8",
-                    "success": function (data) {
-                        console.log('Success: ', data);
-                    },
-                    error: function (data) {
-                        console.log('Error', data);
-                    },
-                });
-            }));
-
-    </script>
-    <script>
         $(document).ready(function () {
             $("#skickaVänförfrågan").on("click", function () {
                 alert('En vänförfrågan har skickats');
             });
         });
     </script>
-    }
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#post').click(function () {
+            var text = $('#postInnehåll').val();
+            var id = "@Model.Anvandare.Id";
+            var meddelande = {
+                Message: text,
+                MottagareID: id
+            };
+
+            if (text != "") {
+                $.ajax({
+                    url: "/api/api/skickapost/",
+                    type: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: JSON.stringify(meddelande)
+                }).done(function (result) {
+                    alert('Ditt inlägg har postats');
+                });
+                setTimeout(function () { window.location = window.location; }, 500);
+            }
+        });
+    });
+</script>

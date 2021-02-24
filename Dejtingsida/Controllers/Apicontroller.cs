@@ -34,62 +34,27 @@ namespace Dejtingsida.Controllers
         [IgnoreAntiforgeryToken(Order = 1001)]
         [HttpPost]
         [Route("skickapost")]
-        public void SkickaPost(string message, string mottagareID)
+        public String SkickaPost(Inlägg inlägg)
         {
             try
             {
-                //var inlaggMeddelande = meddelande.Message;
-                //var inlaggMottagare = meddelande.MottagareID;
-                var inlaggTid = DateTime.UtcNow;
-                //var inlaggSkickare = message.SkickareID;
-                
-                
+            var inloggadAnvändare = (ClaimsIdentity)User.Identity;
+            string AnvID = inloggadAnvändare.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
 
-                _dejtingContext.Inlägg.Add(new Inlägg
-                {
-                    Message = message,
-                    MottagareID = mottagareID,
-                    Skapad = inlaggTid,
-                    //SkickareID = skickare
-                    
-                });
-                _dejtingContext.SaveChanges();
-                
+            inlägg.SkickareID = AnvID;
+            inlägg.Skapad = DateTime.Now;
+
+            _dejtingContext.Inlägg.Add(inlägg);
+             _dejtingContext.SaveChanges();
+
+            return "Post skickad";
             }
-            catch (Exception)
+
+            catch (Exception e)
             {
-                Console.WriteLine("Gick inte att spara inlägg.");
+                Console.WriteLine(e.Message);
+                return "Post misslyckades"; throw;
             }
-        }
-
-        [Authorize]
-        [HttpGet("avvisaVänförfrågan/{förfrågareID}")]
-        public bool AvvisaVänförfrågan(string förfrågareID)
-        {
-            bool lyckades = false;
-            try
-            {
-                var inloggadAnvändare = (ClaimsIdentity)User.Identity;
-                string AnvID = inloggadAnvändare.Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier).Value;
-
-                IEnumerable<Vänförfrågning> Vänförfrågning = _dejtingContext.Vänförfrågning.Where(förfrågan => förfrågan.MottagareID.Equals(AnvID) &&
-                förfrågan.FörfrågareID.Equals(förfrågareID)
-                && förfrågan.Accepterad == false);
-
-                foreach (Vänförfrågning vän in Vänförfrågning)
-                {
-                    _dejtingContext.Vänförfrågning.Remove(vän);
-                }
-                _dejtingContext.SaveChanges();
-                lyckades = true;
-            }
-            catch (Exception ex)
-            {
-                Console.Write(ex.Message);
-                lyckades = false;
-            }
-
-            return lyckades;
         }
 
         [Authorize]
