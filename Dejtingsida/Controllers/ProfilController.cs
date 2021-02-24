@@ -34,7 +34,7 @@ namespace Dejtingsida.Controllers
                 {
                     Anvandare = Anvandare,
                     //InläggLista = (IEnumerable<Models.Inlägg>)_dejtingContext.Inlägg.ToList(),
-                    inlägg = new Models.Inlägg()
+                    inlägg = new Datalager.Models.Inlägg()
                 };
 
                 return View(model);
