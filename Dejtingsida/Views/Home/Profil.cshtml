@@ -49,7 +49,7 @@
         else if (!Model.Anvandare.Id.Equals(_userManager.GetUserId(User)))
         {
             <div class="col-md-2">
-                <input type="button" class="btn btn-primary pull-right" value="Lägg till vän" onclick="location.href='@Url.Action("SkickaVänförfrågan", "Vänner", new { id = Model.Id})'" />
+                <input type="button" class="btn btn-primary pull-right" value="Lägg till vän" onclick="location.href='@Url.Action("SkickaVänförfrågan", "Vänner", new { id = Model.Anvandare.Id})'" />
             </div>
         }
 
@@ -66,12 +66,15 @@
             <!-- Ifall inga användare hittas skriv ut felmeddelande-->
             @if (@Model.InläggLista != null)
 
-                @foreach (Inlägg in Model.InläggLista )
+                @foreach (Inlägg obj in Model.InläggLista )
                 {
                     <div class="flex">
                         <div class="exempelperson">
-                            <img class="profilbild" src=" Model." alt="Bild saknas" />
-                            <a href="/Profil/@registrerad.Id" class="Profil">@registrerad.Förnamn  @registrerad.Efternamn</a>
+                            <img class="profilbild" src=" @Model.Anvandare.BildNamn" alt="Bild saknas" />
+                            <a href="/Profil/@Model.Anvandare.Id" class="Profil">@Model.Anvandare.Förnamn  @Model.Anvandare.Efternamn</a>
+                            @*<p>@Html.DisplayFor(Model.Anvandare.Id => obj.Message)</p>
+                            <p>@Html.DisplayFor(modelItem => obj.BirthDate)</p>
+                            <p>@Html.DisplayFor(modelItem => obj.Description)</p>*@
                         </div>
                     </div>
 
