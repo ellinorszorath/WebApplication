@@ -48,7 +48,7 @@
         else if (!Model.Id.Equals(_userManager.GetUserId(User)))
         {
             <div class="col-md-2">
-                <input type="button" class="btn btn-primary pull-right" value="Lägg till vän" onclick="location.href='@Url.Action("SkickaVänförfrågan", "Vänner", new { id = Model.Id})'" />
+                <input type="button" class="btn btn-primary pull-right" id="skickaVänförfrågan" value="Skicka vänförfrågan" onclick="location.href='@Url.Action("SkickaVänförfrågan", "Vänner", new { id = Model.Id})'" />
             </div>
         }
 
@@ -83,31 +83,14 @@
             }));
 
             </script>
-            @*<script>
 
-             $(() =>
-            $("#skicka").click((e) => {
-            e.preventDefault();
-
-                var mottagare = $('#skicka').attr("data-value-user");
-            $.ajax({
-                url: "/api/api/SkickaVänförfrågan" + mottagare,
-                type: "GET",
-                headers:
-                {
-                    "RequestVerificationToken": '@GetAntiForgeryToken()',
-                },
-                contentType: "application/json",
-                dataType: "json",
-                success: function () {
-                    location.reload(true);
-                },
-                error: function () {
-                    alert('Gick ej att skicka');
-                }
+            <script>
+            $(document).ready(function(){
+            $("#skickaVänförfrågan").on("click",function()
+            {
+            alert('En vänförfrågan har skickats');
             });
-        })
-    );
-            </script>*@
+            });
+            </script>
 
         }

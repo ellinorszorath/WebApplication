@@ -27,23 +27,19 @@ namespace Dejtingsida.Controllers
         [Authorize]
         [Route("Vänner/Index")]
         public IActionResult Index()
+
         {
-            try
+            string id = _userManager.GetUserId(User);
+            var vänförfrågning = _dejtingContext.Vänförfrågning.Where(f => f.Accepterad == true && f.MottagareID.Equals(id) || f.FörfrågareID.Equals(id));
+            var skickareID = vänförfrågning.Select(f => f.FörfrågareID);
+            var profiler = new List<Registrerad>();
+            foreach (string x in skickareID)
             {
-                ClaimsPrincipal claim = this.User;
-                string användareID = _userManager.GetUserAsync(claim).Result.Id;
-                var vänner = _dejtingContext.Vänförfrågning.Where(x => (x.MottagareID.Equals(användareID) || x.FörfrågareID.Equals(användareID)) &&
-                x.Accepterad == true);
-
-                VännerViewModel nyModell = new VännerViewModel { Registrerad = användareID, Vänförfrågningar = vänner.ToList()};
-                return View(nyModell);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine(ex.Message);
-                return View();
+                var p = _dejtingContext.Registrering.Find(x);
+                profiler.Add(p);
             }
 
+            return View(profiler);
         }
 
         public IActionResult SkickaVänförfrågan(string id)
@@ -62,7 +58,7 @@ namespace Dejtingsida.Controllers
                 _dejtingContext.Vänförfrågning.Add(vän);
                 _dejtingContext.SaveChanges();
 
-                return RedirectToAction("Profil", "Home", new { id });
+                return RedirectToAction("Profil", "Home", new { id});
             }
             catch (Exception ex)
             {
@@ -91,6 +87,47 @@ namespace Dejtingsida.Controllers
                 }
                 _dejtingContext.SaveChanges();
                 return RedirectToAction("Vänförfrågningar", "Vänner", new { id });
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex.Message);
+                return View(new ErrorViewModel());
+            }
+        }
+
+        public IActionResult AvvisaVänförfrågan(string id)
+        {
+            try
+            {
+                string anv = _userManager.GetUserId(User);
+
+                var vän = _dejtingContext.Vänförfrågning.Where(f => f.Accepterad == false && f.MottagareID.Equals(id) || f.FörfrågareID.Equals(id)
+                    && f.MottagareID.Equals(anv) || f.FörfrågareID.Equals(anv)).FirstOrDefault();
+                _dejtingContext.Vänförfrågning.Remove(vän);
+                _dejtingContext.SaveChanges();
+
+                return RedirectToAction("Vänförfrågningar", "Vänner", new { id });
+            }
+            catch (Exception ex)
+            {
+                Console.Write(ex.Message);
+                return View(new ErrorViewModel());
+            }
+        }
+
+        public IActionResult TaBortVän(string id)
+        {
+            try
+            {
+                string anv = _userManager.GetUserId(User);
+
+                var vän = _dejtingContext.Vänförfrågning.Where(f => f.MottagareID.Equals(id) || f.FörfrågareID.Equals(id)
+                    && f.MottagareID.Equals(anv) || f.FörfrågareID.Equals(anv)).FirstOrDefault();
+
+                _dejtingContext.Vänförfrågning.Remove(vän);
+                _dejtingContext.SaveChanges();
+
+                return RedirectToAction("Index", "Vänner", new { id });
             }
             catch (Exception ex)
             {

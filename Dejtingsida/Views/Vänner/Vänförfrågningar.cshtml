@@ -3,108 +3,39 @@
 @using Datalager
 @using Datalager.Models
 @inject UserManager<Registrerad> _userManager
-@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery AntiForgery
+
+<link rel="stylesheet" href="~/css/Start.css" />
+<link href="https://fonts.googleapis.com/css2?family=Lobster+Two&display=swap" rel="stylesheet">
 
 @{
     ViewData["Title"] = "Dina vänförfrågningar";
-}
-
-@functions {
-    public string GetAntiForgeryToken()
-    {
-        return AntiForgery.GetAndStoreTokens(Context).RequestToken;
-    }
 }
 
 @if (Model.Vänförfrågningar.Count() >= 1)
 {
     <h1>Det finns @Model.Vänförfrågningar.Count() nya vänförfrågningar</h1>
 
-    <div class="row">
-        <ul class="list-unstyled">
-            @foreach (var vänförfrågan in Model.Vänförfrågningar)
-            {
+    @foreach (var vänförfrågan in Model.Vänförfrågningar)
+    {
+        <div class="flex">
+            <div class="exempelperson">
+              <img class="profilbild" src="@_userManager.FindByIdAsync(vänförfrågan.FörfrågareID).Result.BildNamn" alt="Bild saknas" />
+              <a href="/Profil/@vänförfrågan.FörfrågareID" class="Profil">@_userManager.FindByIdAsync(vänförfrågan.FörfrågareID).Result.Förnamn  @_userManager.FindByIdAsync(vänförfrågan.FörfrågareID).Result.Efternamn</a>
 
-                <li class="media m-3">
-                    <img class="card-img-top mx-auto profile-image-large"
-                         src="@_userManager.FindByIdAsync(vänförfrågan.FörfrågareID).Result.BildNamn"
-                         alt="Picture of @_userManager.FindByIdAsync(vänförfrågan.FörfrågareID).Result.Förnamn" />
+               <input type="button" class="btn btn-primary btn-sm" style="float:right; margin-right: 50%;" value="Acceptera vänförfrågan" onclick="location.href='@Url.Action("AccepteraVänförfrågan", "Vänner", new { id = vänförfrågan.FörfrågareID})'" />
 
-                    <div class="media-body m-2">
+               <input type="button" class="btn btn-primary btn-sm" style="float:right" value="Avvisa vänförfrågan" onclick="location.href='@Url.Action("AvvisaVänförfrågan", "Vänner", new { id = vänförfrågan.FörfrågareID})'" />
 
-                        <h5>@_userManager.FindByIdAsync(vänförfrågan.FörfrågareID).Result.Förnamn</h5>
+              </div>
+        </div>
 
-                        <a class="btn btn-outline-primary btn-sm" href="/Profile/@_userManager.FindByIdAsync(vänförfrågan.FörfrågareID).Result.Id">Visa profil<br></a>
-
-                        <input type="button" class="btn btn-primary pull-right" value="Acceptera vänförfrågan" onclick="location.href='@Url.Action("AccepteraVänförfrågan", "Vänner", new { id = vänförfrågan.FörfrågareID})'" />
-
-                        <button type="button"
-                                class="btn btn-outline-danger btn-sm"
-                                id="AvvisaVänförfrågan"
-                                data-value-requester="@vänförfrågan.FörfrågareID"
-                                data-value-receiver="@vänförfrågan.MottagareID"
-                                onclick="">
-                            Avvisa
-                        </button>
-                    </div>
-                </li>
-
-            }
-        </ul>
-
-    </div>
-
+      }
 }
 else
 {
-    <h1 class="align-middle text-center">Du har inga nya vänförfrågningar</h1>
+         <h1 class="align-middle text-center">Du har inga nya vänförfrågningar</h1>
 }
 
 @section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-    @*<script>
-    $(() =>
-        $("#AccepteraVänförfrågan").click((e) => {
-            e.preventDefault();
-
-            var förfrågare = $('#AccepteraVänförfrågan').attr("data-value-requester");
-            $.ajax({
-                url: "/api/api/accepteraVänförfrågan" + förfrågare,
-                type: "GET",
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function () {
-                    location.reload(true);
-                },
-                error: function () {
-                    alert('Något gick fel');
-                }
-            });
-        })
-    );*@
-
-   $(() =>
-       $("#AvvisaVänförfrågan").click((e) => {
-            e.preventDefault();
-
-           var förfrågareID = $('#AvvisaVänförfrågan').attr("data-value-requester");
-            $.ajax({
-                url: "/api/api/avvisaVänförfrågan" + förfrågareID,
-                type: "GET",
-                headers:
-                {
-                    "RequestVerificationToken": '@GetAntiForgeryToken()',
-                },
-                contentType: "application/json; charset=utf-8",
-                dataType: "json",
-                success: function () {
-                    location.reload(true);
-                },
-                error: function () {
-                    alert('Något gick fel');
-                }
-            });
-        })
-    );
-    </script>
+<partial name="_ValidationScriptsPartial" />
 }
