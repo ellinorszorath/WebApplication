@@ -2,6 +2,7 @@
 @using Datalager.Models;
 @using Dejtingsida.Models;
 @using Datalager;
+@model SökViewModel
 @{
     ViewData["Title"] = "Sök";
 }
@@ -11,16 +12,24 @@
 
 <h1 class="display-4">Sökresultat</h1>
 
-@foreach (var anvandare in _userManager.Users.ToList()) {
-    if (anvandare.Visas)
+@if (Model.anvandare.Count() == 0)
+{
+    <h2>Det finns inga användare som matchade det du sökte på, vänligen testa något annat</h2>
+}
+else
+{
+    @foreach (var anvandare in Model.anvandare)
     {
+
         <div class="flex">
             <div class="exempelperson">
                 <img class="profilbild" src="@anvandare.BildNamn" alt="Bild saknas" />
                 <a href="/Profil/@anvandare.Id" class="Profil">@anvandare.Förnamn  @anvandare.Efternamn</a>
             </div>
-        </div>   
-}   
+        </div>
+
+    }
 }
+
 
 

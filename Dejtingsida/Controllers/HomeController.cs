@@ -119,9 +119,9 @@ namespace Dejtingsida.Controllers
                 if (!String.IsNullOrEmpty(Sok))
                 {
                     Anvandare = Anvandare.Where(u => u.Förnamn.Contains(Sok) && u.Visas == true);
-                }
 
-                return View();
+                }
+                return View(new SökViewModel {anvandare = Anvandare.ToList(), SökSträng = Sok });
             }
             catch (Exception e)
             {

@@ -35,9 +35,9 @@
         </li>*@
                         @if (SignInManager.IsSignedIn(User))
                         {
-                            <form class="form-inline" asp-controller="Home" asp-action="Sök">
-                                <input class="form-control mr-sm-2" type="text" name="Name" placeholder="Sök efter användare.." required>
-                                <input class="btn btn-outline-primary my-2 my-sm-0" type="submit" value="Sök" />
+                            <form class="form-inline" asp-controller="Home" asp-action="Sök" method="get">
+                                <input type="text" name="Sok" placeholder="Sök efter användare.." required>
+                                <input class="sök" type="submit" value="Sök" />
                             </form>
                         }
                     </ul>
