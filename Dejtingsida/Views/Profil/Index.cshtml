@@ -1,0 +1,126 @@
+﻿@{
+    ViewData["Title"] = "Profil";
+}
+@using Microsoft.AspNetCore.Identity
+@using Dejtingsida.Models;
+@using Datalager.Models;
+
+@model Dejtingsida.Models.AnvandareViewModel;
+@inject UserManager<Registrerad> _userManager;
+@*Profile content*@
+<link rel="stylesheet" href="~/css/Start.css" />
+<div class="container-fluid mt-3">
+    <div class="row col-sm-2 float-right">
+        <img src="@Model.Anvandare.BildNamn" class="img-thumbnail rounded float-right mx-auto profile-image-large">
+    </div>
+    <div class="col-sm-10 float-left">
+        <dl class="row float-left">
+            <dt class="col-sm-3">Förnamn</dt>
+            <dd class="col-sm-7">@Model.Anvandare.Förnamn</dd>
+
+            <dt class="col-sm-3">Efternamn</dt>
+            <dd class="col-sm-7">@Model.Anvandare.Efternamn</dd>
+
+            <dt class="col-sm-3">Född år:</dt>
+            <dd class="col-sm-7">@Model.Anvandare.Födelsedatum.ToString("yyyy")</dd>
+
+        </dl>
+    </div>
+
+    <div class="clearfix"></div>
+
+    @if (Model.Anvandare.Id.Equals(_userManager.GetUserId(User)))
+    {
+        <a href="@Url.Action("Index", "Vänner")" class="btn btn-primary">Mina vänner</a>
+    }
+
+    else if (!Model.Anvandare.Id.Equals(_userManager.GetUserId(User)))
+    {
+        <div class="col-md-2">
+            <input type="button" class="btn btn-primary pull-right" id="skickavänförfrågan" value="Skicka vänförfrågan" onclick="location.href='@Url.Action("SkickaVänförfrågan", "Vänner", new { id = Model.Anvandare.Id})'" />
+        </div>
+    }
+
+    <h4 class="col-sm-9 float-left text-left">Inlägg</h4>
+    <div class="nyttInlägg">
+        <a class="inlägg">Skriv ett inlägg</a>
+        <textarea id="postInnehåll" class="form-control" rows="5" style="resize:none;"></textarea>
+        <input id="post" type="submit" value="Skicka inlägg" class="btn btn-primary" ) />
+    </div>
+</div>
+<div>
+    @try
+    {
+        <!-- Ifall inga användare hittas skriv ut felmeddelande-->
+        @if (@Model != null)
+
+            @for (int index = 0; (index < _userManager.Users.Count() && index < 3); index++)
+            {
+                var registrerad = _userManager.Users.ToList()[index];
+                <div class="flex">
+                    <div class="exempelperson">
+                        <img class="profilbild" src="@registrerad.BildNamn" alt="Bild saknas" />
+                        <a href="/Profil/@registrerad.Id" class="Profil">@registrerad.Förnamn  @registrerad.Efternamn</a>
+                    </div>
+                </div>
+
+            }
+            else
+            {
+                <div class="container">
+                    <div class="row" style="margin-top: 2em;">
+                        <div class="col-12">
+                            <h3 style="text-align:center;">Testa null</h3>
+                        </div>
+                    </div>
+                </div>
+            }
+    }
+    catch (Exception)
+    {
+        <div class="container">
+            <div class="row" style="margin-top: 2em;">
+                <div class="col-12">
+                    <h3 style="text-align:center;">Vänligen fyll i något att söka på</h3> <!-- Skriv ut felmeddelande ifall du söker på tomt-->
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+<div class="clearfix"></div>
+
+@section Scripts {
+    <script>
+
+        $(() =>
+            $("#post").click(() => {
+                var registrerad = @Html.Raw(Json.Serialize(Model));
+                    var inlägg =
+                    {
+                        message: $("#postInnehåll").val(),
+                        mottagareID:"@Model.Anvandare.Id"
+                    };
+                $.ajax({
+                    "type": "POST",
+                    "url": "/api/api/skickapost",
+                    "data": JSON.stringify(inlägg),
+                    "dataType": "json",
+                    "contentType": "application/json; charset=utf-8",
+                    "success": function (data) {
+                        console.log('Success: ', data);
+                    },
+                    error: function (data) {
+                        console.log('Error', data);
+                    },
+                });
+            }));
+
+    </script>
+    <script>
+        $(document).ready(function () {
+            $("#skickaVänförfrågan").on("click", function () {
+                alert('En vänförfrågan har skickats');
+            });
+        });
+    </script>

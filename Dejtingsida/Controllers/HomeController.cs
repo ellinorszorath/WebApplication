@@ -14,7 +14,6 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Security.Claims;
-using Dejtingsida.Viewmodels;
 
 namespace Dejtingsida.Controllers
 {
@@ -62,52 +61,6 @@ namespace Dejtingsida.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-
-        [Authorize]
-        [Route("Profil")]
-        public IActionResult Profil()
-        {
-            try
-            {
-                ClaimsPrincipal claim = this.User;
-                Registrerad user = _userManager.GetUserAsync(claim).Result;
-                //Registrerad model = new Registrerad()
-                //{
-                //    Användare = user,
-                //};
-
-
-                return View(user);
-            }
-            catch (Exception ex)
-            {
-
-                Console.WriteLine(ex.Message);
-                return View();
-            }
-        }
-
-        [Authorize]
-        [Route("Profil/{Id}")]
-        public IActionResult Profil(string Id)
-        { 
-            Registrerad user;
-            if (_userManager.FindByIdAsync(Id).Result != null)
-            {
-               
-                user = _userManager.FindByIdAsync(Id).Result;
-                //AnvandareViewModel model = new AnvandareViewModel()
-                //{
-                //    Anvandare = user
-                //};
-                return View(user);
-            }
-            else
-            {
-
-                return View("Error");
-            }
         }
 
         public IActionResult Sök(string Sok) 
