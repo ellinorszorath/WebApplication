@@ -37,7 +37,7 @@
     else if (!Model.Anvandare.Id.Equals(_userManager.GetUserId(User)))
     {
         <div class="col-md-2">
-            <input type="button" class="btn btn-primary pull-right" id="skickavänförfrågan" value="Skicka vänförfrågan" onclick="location.href='@Url.Action("SkickaVänförfrågan", "Vänner", new { id = Model.Anvandare.Id})'" />
+            <input type="button" class="btn btn-primary pull-right" id="skickaVänförfrågan" value="Skicka vänförfrågan" onclick="location.href='@Url.Action("SkickaVänförfrågan", "Vänner", new { id = Model.Anvandare.Id})'" />
         </div>
     }
 
@@ -124,3 +124,4 @@
             });
         });
     </script>
+    }

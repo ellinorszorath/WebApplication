@@ -58,7 +58,7 @@ namespace Dejtingsida.Controllers
                 _dejtingContext.Vänförfrågning.Add(vän);
                 _dejtingContext.SaveChanges();
 
-                return RedirectToAction("Profil", "Home", new { id});
+                return RedirectToAction("Index", "Profil", new { id});
             }
             catch (Exception ex)
             {
