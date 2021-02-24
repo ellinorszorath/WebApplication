@@ -47,13 +47,9 @@
 
         else if (!Model.Id.Equals(_userManager.GetUserId(User)))
         {
-            <button type="button"
-                    class="btn btn-outline-info btn-sm"
-                    id="skicka"
-                    data-value-user="@Model.Id"
-                    onclick="">
-                Skicka vänförfrågan
-            </button>
+            <div class="col-md-2">
+                <input type="button" class="btn btn-primary pull-right" value="Lägg till vän" onclick="location.href='@Url.Action("SkickaVänförfrågan", "Vänner", new { id = Model.Id})'" />
+            </div>
         }
 
         <h4 class="col-sm-9 float-left text-left">Inlägg</h4>
@@ -113,5 +109,5 @@
         })
     );
             </script>
-            
+
         }
