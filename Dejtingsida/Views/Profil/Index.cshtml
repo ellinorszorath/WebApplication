@@ -7,7 +7,6 @@
 
 @model Dejtingsida.Models.AnvandareViewModel;
 @inject UserManager<Registrerad> _userManager;
-
 @*Profile content*@
 <link rel="stylesheet" href="~/css/Start.css" />
 <div class="container-fluid mt-3">
@@ -38,7 +37,7 @@
     else if (!Model.Anvandare.Id.Equals(_userManager.GetUserId(User)))
     {
         <div class="col-md-2">
-            <input type="button" class="btn btn-primary pull-right" value="Lägg till vän" onclick="location.href='@Url.Action("SkickaVänförfrågan", "Vänner", new { id = Model.Anvandare.Id})'" />
+            <input type="button" class="btn btn-primary pull-right" id="skickavänförfrågan" value="Skicka vänförfrågan" onclick="location.href='@Url.Action("SkickaVänförfrågan", "Vänner", new { id = Model.Anvandare.Id})'" />
         </div>
     }
 
@@ -93,14 +92,15 @@
 
 @section Scripts {
     <script>
-                    var registrerad = @Html.Raw(Json.Serialize(Model));
+
+        $(() =>
+            $("#post").click(() => {
+                var registrerad = @Html.Raw(Json.Serialize(Model));
                     var inlägg =
                     {
                         message: $("#postInnehåll").val(),
                         mottagareID:"@Model.Anvandare.Id"
                     };
-        $(() =>
-            $("#post").click(() => {
                 $.ajax({
                     "type": "POST",
                     "url": "/api/api/skickapost",
@@ -117,31 +117,10 @@
             }));
 
     </script>
-    @*<script>
-
-                 $(() =>
-                $("#skicka").click((e) => {
-                e.preventDefault();
-
-                    var mottagare = $('#skicka').attr("data-value-user");
-                $.ajax({
-                    url: "/api/api/SkickaVänförfrågan" + mottagare,
-                    type: "GET",
-                    headers:
-                    {
-                        "RequestVerificationToken": '@GetAntiForgeryToken()',
-                    },
-                    contentType: "application/json",
-                    dataType: "json",
-                    success: function () {
-                        location.reload(true);
-                    },
-                    error: function () {
-                        alert('Gick ej att skicka');
-                    }
-                });
-            })
-        );
-                </script>*@
-
-}
+    <script>
+        $(document).ready(function () {
+            $("#skickaVänförfrågan").on("click", function () {
+                alert('En vänförfrågan har skickats');
+            });
+        });
+    </script>
