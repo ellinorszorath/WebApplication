@@ -9,7 +9,7 @@ namespace Dejtingsida.Models
     public class VännerViewModel
     {
         public string Registrerad { get; set; }
-        public List<Vänförfrågning> Vänförfrågningar { get; set; }
+        public ICollection<Vänförfrågning> Vänförfrågningar { get; set; }
 
     }
 }

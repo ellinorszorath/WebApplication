@@ -2,14 +2,6 @@
 @using Datalager.Models
 @using Microsoft.AspNetCore.Identity
 @inject UserManager<Registrerad> _userManager
-@inject Microsoft.AspNetCore.Antiforgery.IAntiforgery AntiForgery
-
-@functions {
-    public string GetAntiForgeryToken()
-    {
-        return AntiForgery.GetAndStoreTokens(Context).RequestToken;
-    }
-}
 
 @{
     ViewData["Title"] = "Vänsida";
@@ -80,7 +72,7 @@ else
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
-    <script>
+    @*<script>
     $(() =>
         $(".remove").click((event) => {
             event.preventDefault();
@@ -104,5 +96,5 @@ else
             });
         })
     );
-    </script>
+    </script>*@
 }
