@@ -7,7 +7,7 @@
 @using Datalager;
 @using Dejtingsida.ViewModels;
  
-@model Datalager.Models.Registrerad; 
+@model Dejtingsida.ViewModels.AnvandareViewModels;
 @inject UserManager<Registrerad> _userManager
 @*@inject DejtingContext _DejtingContext*@
 @inject Microsoft.AspNetCore.Antiforgery.IAntiforgery AntiForgery
@@ -41,12 +41,12 @@
 
         <div class="clearfix"></div>
 
-        @if (Model.Id.Equals(_userManager.GetUserId(User)))
+        @if (Model.Anvandare.Id.Equals(_userManager.GetUserId(User)))
         {
             <a href="@Url.Action("Index", "Vänner")" class="btn btn-primary">Mina vänner</a>
         }
 
-        else if (!Model.Id.Equals(_userManager.GetUserId(User)))
+        else if (!Model.Anvandare.Id.Equals(_userManager.GetUserId(User)))
         {
             <div class="col-md-2">
                 <input type="button" class="btn btn-primary pull-right" value="Lägg till vän" onclick="location.href='@Url.Action("SkickaVänförfrågan", "Vänner", new { id = Model.Id})'" />
@@ -60,18 +60,17 @@
             <input id="post" type="submit" value="Skicka inlägg" class="btn btn-primary" ) />
         </div>
         </div>
-    <div>
+    <div inläggvägg>
         @try
         {
             <!-- Ifall inga användare hittas skriv ut felmeddelande-->
-            @if (@Model != null)
+            @if (@Model.InläggLista != null)
 
-                @for (int index = 0; (index < _userManager.Users.Count() && index < 3); index++)
+                @foreach (Inlägg in Model.InläggLista )
                 {
-                    var registrerad = _userManager.Users.ToList()[index];
                     <div class="flex">
                         <div class="exempelperson">
-                            <img class="profilbild" src="@registrerad.BildNamn" alt="Bild saknas" />
+                            <img class="profilbild" src=" Model." alt="Bild saknas" />
                             <a href="/Profil/@registrerad.Id" class="Profil">@registrerad.Förnamn  @registrerad.Efternamn</a>
                         </div>
                     </div>
@@ -108,7 +107,7 @@
                     var inlägg =
                     {
                         message: $("#postInnehåll").val(),
-                        mottagareID:"@Model.Id"
+                        mottagareID:"@Model.Anvandare.Id"
                     };
         $(() =>
             $("#post").click(() => {
