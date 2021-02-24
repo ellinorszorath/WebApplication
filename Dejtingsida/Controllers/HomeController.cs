@@ -14,7 +14,7 @@ using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Security.Claims;
-using Dejtingsida.Viewmodels;
+using Dejtingsida.ViewModels;
 
 namespace Dejtingsida.Controllers
 {

@@ -31,26 +31,30 @@ namespace Dejtingsida.Controllers
 
 
         }
+        [IgnoreAntiforgeryToken(Order = 1001)]
         [HttpPost]
         [Route("skickapost")]
-        public void SkickaPost(Inlägg meddelande)
+        public void SkickaPost(string message, string mottagareID)
         {
             try
             {
-                var inlaggMeddelande = meddelande.Message;
-                var inlaggMottagare = meddelande.MottagareID;
+                //var inlaggMeddelande = meddelande.Message;
+                //var inlaggMottagare = meddelande.MottagareID;
                 var inlaggTid = DateTime.UtcNow;
-                //var inlaggSkickare = meddelande.SkickareID;
+                //var inlaggSkickare = message.SkickareID;
+                
                 
 
-                _dejtingContext.Inlägg.Add(new Datalager.Models.Inlägg
+                _dejtingContext.Inlägg.Add(new Inlägg
                 {
-                    Message = inlaggMeddelande,
-                    MottagareID = meddelande.MottagareID,
+                    Message = message,
+                    MottagareID = mottagareID,
                     Skapad = inlaggTid,
-                    //SkickareID = inlaggSkickare
+                    //SkickareID = skickare
+                    
                 });
                 _dejtingContext.SaveChanges();
+                
             }
             catch (Exception)
             {

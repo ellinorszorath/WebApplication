@@ -5,7 +5,8 @@
 @using Datalager.Models;
 @using Dejtingsida.Models;
 @using Datalager;
-
+@using Dejtingsida.ViewModels;
+ 
 @model Datalager.Models.Registrerad; 
 @inject UserManager<Registrerad> _userManager
 @*@inject DejtingContext _DejtingContext*@
@@ -62,31 +63,75 @@
             <textarea id="postInnehåll" class="form-control" rows="5" style="resize:none;"></textarea>
             <input id="post" type="submit" value="Skicka inlägg" class="btn btn-primary" ) />
         </div>
+        </div>
+    <div>
+        @try
+        {
+            <!-- Ifall inga användare hittas skriv ut felmeddelande-->
+            @if (@Model != null)
+
+                @for (int index = 0; (index < _userManager.Users.Count() && index < 3); index++)
+                {
+                    var registrerad = _userManager.Users.ToList()[index];
+                    <div class="flex">
+                        <div class="exempelperson">
+                            <img class="profilbild" src="@registrerad.BildNamn" alt="Bild saknas" />
+                            <a href="/Profil/@registrerad.Id" class="Profil">@registrerad.Förnamn  @registrerad.Efternamn</a>
+                        </div>
+                    </div>
+
+                }
+                else
+                {
+                    <div class="container">
+                        <div class="row" style="margin-top: 2em;">
+                            <div class="col-12">
+                                <h3 style="text-align:center;">Testa null</h3>
+                            </div>
+                        </div>
+                    </div>
+                }
+        }
+        catch (Exception)
+        {
+            <div class="container">
+                <div class="row" style="margin-top: 2em;">
+                    <div class="col-12">
+                        <h3 style="text-align:center;">Vänligen fyll i något att söka på</h3> <!-- Skriv ut felmeddelande ifall du söker på tomt-->
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
 
         <div class="clearfix"></div>
 
         @section Scripts {
-            <script>
+                <script>
                     var registrerad = @Html.Raw(Json.Serialize(Model));
                     var inlägg =
                     {
                         message: $("#postInnehåll").val(),
                         mottagareID:"@Model.Id"
-                        @*skickareID: @_userManager.GetUserId(User)*@
                     };
         $(() =>
             $("#post").click(() => {
                 $.ajax({
-                    type: "POST",
-                    dataType: "json",
-                    url: "/api/api/skickapost",
-                    contentType: "application/json; charset=utf-8",
-                    data: JSON.stringify(inlägg),
-                    success: alert($("#postInnehåll").val()),
+                    "type": "POST",
+                    "url": "/api/api/skickapost",
+                    "data": JSON.stringify(inlägg),
+                    "dataType": "json",
+                    "contentType": "application/json; charset=utf-8",
+                    "success": function (data) {
+                        console.log('Success: ', data);
+                    },
+                    error: function (data) {
+                        console.log('Error', data);
+                    },
                 });
             }));
 
-            </script>
+                </script>
             <script>
 
              $(() =>
