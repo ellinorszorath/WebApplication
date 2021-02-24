@@ -45,6 +45,9 @@ namespace Dejtingsida.Areas.Identity.Pages.Account.Manage
             [Required]
             [Display(Name = "BildURL")]
             public string BildNamn { get; set; }
+            [Required]
+            [Display(Name = "Visas i sökresultat")]
+            public bool Visas { get; set; }
         }
 
         private async Task LoadAsync(Registrerad Anvandare)
@@ -58,7 +61,8 @@ namespace Dejtingsida.Areas.Identity.Pages.Account.Manage
                 Förnamn = Anvandare.Förnamn,
                 Efternamn = Anvandare.Efternamn,
                 Födelsedatum = Anvandare.Födelsedatum,
-                BildNamn = Anvandare.BildNamn
+                BildNamn = Anvandare.BildNamn,
+                Visas = Anvandare.Visas
             };
         }
 
@@ -104,6 +108,11 @@ namespace Dejtingsida.Areas.Identity.Pages.Account.Manage
             if (Input.BildNamn != Anvandare.BildNamn)
             {
                 Anvandare.BildNamn = Input.BildNamn;
+            }
+
+            if (Input.Visas != Anvandare.Visas)
+            {
+                Anvandare.Visas = Input.Visas;
             }
 
             await _userManager.UpdateAsync(Anvandare);

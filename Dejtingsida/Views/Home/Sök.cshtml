@@ -1,0 +1,35 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using Datalager.Models;
+@using Dejtingsida.Models;
+@using Datalager;
+@model SökViewModel
+@{
+    ViewData["Title"] = "Sök";
+}
+@inject UserManager<Registrerad> _userManager
+<link rel="stylesheet" href="~/css/Start.css" />
+<link href="https://fonts.googleapis.com/css2?family=Lobster+Two&display=swap" rel="stylesheet">
+
+<h1 class="display-4">Sökresultat</h1>
+
+@if (Model.anvandare.Count() == 0)
+{
+    <h2>Det finns inga användare som matchade det du sökte på, vänligen testa något annat</h2>
+}
+else
+{
+    @foreach (var anvandare in Model.anvandare)
+    {
+
+        <div class="flex">
+            <div class="exempelperson">
+                <img class="profilbild" src="@anvandare.BildNamn" alt="Bild saknas" />
+                <a href="/Profil/@anvandare.Id" class="Profil">@anvandare.Förnamn  @anvandare.Efternamn</a>
+            </div>
+        </div>
+
+    }
+}
+
+
+

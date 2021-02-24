@@ -36,14 +36,7 @@
 
                         <a class="btn btn-outline-primary btn-sm" href="/Profile/@_userManager.FindByIdAsync(vänförfrågan.FörfrågareID).Result.Id">Visa profil<br></a>
 
-                        <button type="button"
-                                class="btn btn-outline-success btn-sm"
-                                id="AccepteraVänförfrågan"
-                                data-value-requester="@vänförfrågan.FörfrågareID"
-                                data-value-receiver="@vänförfrågan.MottagareID"
-                                onclick="">
-                            Acceptera
-                        </button>
+                        <input type="button" class="btn btn-primary pull-right" value="Acceptera vänförfrågan" onclick="location.href='@Url.Action("AccepteraVänförfrågan", "Vänner", new { id = vänförfrågan.FörfrågareID})'" />
 
                         <button type="button"
                                 class="btn btn-outline-danger btn-sm"
@@ -69,7 +62,7 @@ else
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
-    <script>
+    @*<script>
     $(() =>
         $("#AccepteraVänförfrågan").click((e) => {
             e.preventDefault();
@@ -88,7 +81,7 @@ else
                 }
             });
         })
-    );
+    );*@
 
    $(() =>
        $("#AvvisaVänförfrågan").click((e) => {

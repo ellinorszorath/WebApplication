@@ -11,5 +11,6 @@ namespace Datalager.Models
         public string Efternamn { get; set; }
         public DateTime Födelsedatum { get; set; }
         public string BildNamn { get; set; }
+        public bool Visas { get; set; } = false;
     }
 }
