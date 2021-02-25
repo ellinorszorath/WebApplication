@@ -22,9 +22,9 @@
                 <img class="profilbild" src="@_userManager.FindByIdAsync(vänförfrågan.FörfrågareID).Result.BildNamn" alt="Bild saknas" />
                 <a href="/Profil/@vänförfrågan.FörfrågareID" class="Profil">@_userManager.FindByIdAsync(vänförfrågan.FörfrågareID).Result.Förnamn  @_userManager.FindByIdAsync(vänförfrågan.FörfrågareID).Result.Efternamn</a>
 
-                <input type="button" class="btn btn-primary btn-sm" style="float:right;" value="Avvisa vänförfrågan" onclick="location.href='@Url.Action("AvvisaVänförfrågan", "Vänner", new { id = vänförfrågan.FörfrågareID})'" />
+                <input type="button" class="btn btn-primary btn-sm-dec" style="float:right;" value="Avvisa vänförfrågan" onclick="location.href='@Url.Action("AvvisaVänförfrågan", "Vänner", new { id = vänförfrågan.FörfrågareID})'" />
 
-                <input type="button" class="btn btn-primary btn-sm" style="float:right;" value="Acceptera vänförfrågan" onclick="location.href='@Url.Action("AccepteraVänförfrågan", "Vänner", new { id = vänförfrågan.FörfrågareID})'" />
+                <input type="button" class="btn btn-primary btn-sm-app" style="float:right;" value="Acceptera vänförfrågan" onclick="location.href='@Url.Action("AccepteraVänförfrågan", "Vänner", new { id = vänförfrågan.FörfrågareID})'" />
 
             </div>
         </div>

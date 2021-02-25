@@ -2,12 +2,24 @@
     background-repeat: no-repeat;
     background-image: linear-gradient(lightgray, lightpink);
 }
+.navbar-nav{
+    padding-left: 20px;
+}
+.nav-item
+{
+}
+.btn btn-primary btn-sm-app{
+    color: darkgreen;
+}
+.btn btn-primary btn-sm-dec {
+    color: darkred;
+}
 div.exempelperson {
     background-color: lightpink;
     border-style: dashed;
     border-color: white;
     border-radius: 10px;
-    flex: 30%; 
+    flex: 30%;
     margin-right: 5px;
     margin-top: 5px;
 }
