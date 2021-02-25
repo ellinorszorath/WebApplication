@@ -4,14 +4,13 @@
 @using Microsoft.AspNetCore.Identity
 @using Dejtingsida.Models;
 @using Datalager.Models;
-
 @model Dejtingsida.Models.AnvandareViewModel;
 @inject UserManager<Registrerad> _userManager;
-@*Profile content*@
+
 <link rel="stylesheet" href="~/css/Start.css" />
 <div class="container-fluid mt-3">
     <div class="row col-sm-2 float-right">
-        <img src="@Model.Anvandare.BildNamn" class="img-thumbnail rounded float-right mx-auto profile-image-large">
+        <img src="@Model.Anvandare.BildNamn" class="img-thumbnail float-right mx-auto profil">
     </div>
     <div class="col-sm-10 float-left">
         <dl class="row float-left">
@@ -39,84 +38,43 @@
         <div class="col-md-2">
             <input type="button" class="btn btn-primary pull-right" id="skickaVänförfrågan" value="Skicka vänförfrågan" onclick="location.href='@Url.Action("SkickaVänförfrågan", "Vänner", new { id = Model.Anvandare.Id})'" />
         </div>
-    }
-
-    <h4 class="col-sm-9 float-left text-left">Inlägg</h4>
-    <div class="nyttInlägg">
-        <a class="inlägg">Skriv ett inlägg</a>
-        <textarea id="postInnehåll" class="form-control" rows="5" style="resize:none;"></textarea>
-        <input id="post" type="submit" value="Skicka inlägg" class="btn btn-primary" ) />
-    </div>
-</div>
-<div>
-    @try
-    {
-        <!-- Ifall inga användare hittas skriv ut felmeddelande-->
-        @if (@Model != null)
-
-            @for (int index = 0; (index < _userManager.Users.Count() && index < 3); index++)
-            {
-                var registrerad = _userManager.Users.ToList()[index];
-                <div class="flex">
-                    <div class="exempelperson">
-                        <img class="profilbild" src="@registrerad.BildNamn" alt="Bild saknas" />
-                        <a href="/Profil/@registrerad.Id" class="Profil">@registrerad.Förnamn  @registrerad.Efternamn</a>
-                    </div>
-                </div>
-
-            }
-            else
-            {
-                <div class="container">
-                    <div class="row" style="margin-top: 2em;">
-                        <div class="col-12">
-                            <h3 style="text-align:center;">Testa null</h3>
-                        </div>
-                    </div>
-                </div>
-            }
-    }
-    catch (Exception)
-    {
-        <div class="container">
-            <div class="row" style="margin-top: 2em;">
-                <div class="col-12">
-                    <h3 style="text-align:center;">Vänligen fyll i något att söka på</h3> <!-- Skriv ut felmeddelande ifall du söker på tomt-->
-                </div>
-            </div>
+        <h4 class="col-sm-9 float-left text-left">Inlägg</h4>
+        <div class="nyttInlägg">
+            <a class="inlägg">Skriv ett inlägg</a>
+            <textarea id="postInnehåll" class="form-control" rows="5" style="resize:none;"></textarea>
+            <input id="post" type="submit" value="Skicka inlägg" class="btn btn-primary" ) />
         </div>
     }
-</div>
 
+    @if (!Model.InläggLista.Where(text => text.MottagareID.Equals(Model.Anvandare.Id)).Any())
+    {
+        <h1>Inga inlägg</h1>
+    }
+    else
+    {
+        foreach (var text in Model.InläggLista.Where(text => text.MottagareID.Equals(Model.Anvandare.Id)).OrderByDescending(text => text.Skapad))
+        {
+            <div class="Text" style=" background-color:white;">
+                <div class="">
+                    <h5 class="" style="padding-top:5px; padding-left:5px">
+                        Medelande från
+                        <a asp-controller="Profil" asp-route-id="@text.SkickareID" style="color: black; padding-top:5px; padding-left:5px">
+                            @_userManager.FindByIdAsync(text.SkickareID).Result.Förnamn
+                        </a>
+                    </h5>
+                    <h6 class="Text" style="padding-top:5px; padding-left:5px">@text.Skapad.ToLocalTime().ToString("yyyy-MM-dd  HH:mm")</h6>
+                    <p class="Text" style="padding-top:5px; padding-left:5px">@text.Message</p>
+                </div>
+            </div>
+        }
+    }
+
+</div>
 <div class="clearfix"></div>
 
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 @section Scripts {
-    <script>
-
-        $(() =>
-            $("#post").click(() => {
-                var registrerad = @Html.Raw(Json.Serialize(Model));
-                    var inlägg =
-                    {
-                        message: $("#postInnehåll").val(),
-                        mottagareID:"@Model.Anvandare.Id"
-                    };
-                $.ajax({
-                    "type": "POST",
-                    "url": "/api/api/skickapost",
-                    "data": JSON.stringify(inlägg),
-                    "dataType": "json",
-                    "contentType": "application/json; charset=utf-8",
-                    "success": function (data) {
-                        console.log('Success: ', data);
-                    },
-                    error: function (data) {
-                        console.log('Error', data);
-                    },
-                });
-            }));
-
-    </script>
     <script>
         $(document).ready(function () {
             $("#skickaVänförfrågan").on("click", function () {
@@ -124,4 +82,30 @@
             });
         });
     </script>
-    }
+}
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        $('#post').click(function () {
+            var text = $('#postInnehåll').val();
+            var id = "@Model.Anvandare.Id";
+            var meddelande = {
+                Message: text,
+                MottagareID: id
+            };
+
+            if (text != "") {
+                $.ajax({
+                    url: "/api/api/skickapost/",
+                    type: "POST",
+                    contentType: "application/json",
+                    dataType: "json",
+                    data: JSON.stringify(meddelande)
+                }).done(function (result) {
+                    alert('Ditt inlägg har postats');
+                });
+                setTimeout(function () { window.location = window.location; }, 500);
+            }
+        });
+    });
+</script>

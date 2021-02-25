@@ -4,12 +4,9 @@ using Dejtingsida.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using System.Threading.Tasks;
 
 namespace Dejtingsida.Controllers
 {
@@ -33,8 +30,7 @@ namespace Dejtingsida.Controllers
                 AnvandareViewModel model = new AnvandareViewModel()
                 {
                     Anvandare = Anvandare,
-                    //InläggLista = (IEnumerable<Models.Inlägg>)_dejtingContext.Inlägg.ToList(),
-                    inlägg = new Datalager.Models.Inlägg()
+                    InläggLista = _dejtingContext.Inlägg.ToList()
                 };
 
                 return View(model);
@@ -46,6 +42,7 @@ namespace Dejtingsida.Controllers
                 return View();
             }
         }
+        [Authorize]
         [Route("Profil/{Id}")]
         public IActionResult Index(string Id)
         {
@@ -57,7 +54,7 @@ namespace Dejtingsida.Controllers
                 AnvandareViewModel Model = new AnvandareViewModel()
                 {
                     Anvandare = Anvandare,
-                    //InläggLista = _dejtingContext.Inlägg.ToList()
+                    InläggLista = _dejtingContext.Inlägg.ToList()
                 };
                 return View(Model);
             }
@@ -66,10 +63,9 @@ namespace Dejtingsida.Controllers
 
                 return View("Error");
             }
+        }
 
-        }
-    
-        }
+      }
 
     }
 
