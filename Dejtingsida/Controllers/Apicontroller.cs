@@ -6,7 +6,6 @@ using System.Linq;
 using System.Collections.Generic;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Dejtingsida.Controllers
 {
@@ -20,17 +19,7 @@ namespace Dejtingsida.Controllers
         {
             _dejtingContext = dejtingContext;
         }
-        [HttpGet]
-        [Route("getData")]
         
-        public string Get()
-        {
-            //return new string[] { "value1", "value2" };
-            var AnvändareDB = _dejtingContext.Users.FirstOrDefault();
-            return AnvändareDB.UserName;
-
-
-        }
         [IgnoreAntiforgeryToken(Order = 1001)]
         [HttpPost]
         [Route("skickapost")]
@@ -78,7 +67,6 @@ namespace Dejtingsida.Controllers
             return antal;
         }
 
-        // GET api/<ValuesController>/5
         [HttpGet("{id}")]
         [Route("get")]
         public string GetInloggadAnvändare()
@@ -86,19 +74,11 @@ namespace Dejtingsida.Controllers
             return "value";
         }
 
-        // POST api/<ValuesController>
-        //[HttpPost]
-        //public void Post([FromBody] string value)
-        //{
-        //}
-
-        // PUT api/<ValuesController>/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
         }
 
-        // DELETE api/<ValuesController>/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {

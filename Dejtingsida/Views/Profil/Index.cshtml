@@ -4,13 +4,10 @@
 @using Microsoft.AspNetCore.Identity
 @using Dejtingsida.Models;
 @using Datalager.Models;
-
 @model Dejtingsida.Models.AnvandareViewModel;
 @inject UserManager<Registrerad> _userManager;
-@*Profile content*@
+
 <link rel="stylesheet" href="~/css/Start.css" />
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <div class="container-fluid mt-3">
     <div class="row col-sm-2 float-right">
         <img src="@Model.Anvandare.BildNamn" class="img-thumbnail rounded float-right mx-auto profile-image-large">
@@ -58,8 +55,8 @@
         foreach (var text in Model.InläggLista.Where(text => text.MottagareID.Equals(Model.Anvandare.Id)).OrderByDescending(text => text.Skapad))
         {
             <div class="Text" style=" background-color:white;">
-                <div class="" >
-                    <h5 class=""style="padding-top:5px; padding-left:5px">
+                <div class="">
+                    <h5 class="" style="padding-top:5px; padding-left:5px">
                         Medelande från
                         <a asp-controller="Profil" asp-route-id="@text.SkickareID" style="color: black; padding-top:5px; padding-left:5px">
                             @_userManager.FindByIdAsync(text.SkickareID).Result.Förnamn
@@ -75,6 +72,8 @@
 </div>
 <div class="clearfix"></div>
 
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 @section Scripts {
     <script>
         $(document).ready(function () {

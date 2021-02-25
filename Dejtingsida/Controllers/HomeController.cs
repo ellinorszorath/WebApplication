@@ -9,15 +9,10 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using Microsoft.AspNetCore.Http;
-using System.Threading.Tasks;
-using System.ComponentModel.DataAnnotations;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.Security.Claims;
 
 namespace Dejtingsida.Controllers
 {
-    /*[Authorize]*/ //Gör så att man behöver logga in för att kunna komma åt controllern
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

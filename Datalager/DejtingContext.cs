@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Datalager.Models;
-using Microsoft.AspNetCore.Identity;
 
 namespace Datalager
 {
