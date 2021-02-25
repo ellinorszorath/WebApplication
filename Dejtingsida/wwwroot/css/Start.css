@@ -126,3 +126,18 @@ input[type=text] {
     float: right;
     color: red;
 }
+div.Text {
+
+    background-color: white;
+    border-radius: 20%;
+}
+a {
+    color: black;
+}
+    a.Text {
+
+    }
+
+p.Text {
+    color: gray;
+}

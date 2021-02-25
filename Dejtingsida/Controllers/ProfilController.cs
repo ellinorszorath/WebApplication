@@ -33,8 +33,7 @@ namespace Dejtingsida.Controllers
                 AnvandareViewModel model = new AnvandareViewModel()
                 {
                     Anvandare = Anvandare,
-                    //InläggLista = (IEnumerable<Models.Inlägg>)_dejtingContext.Inlägg.ToList(),
-                    inlägg = new Models.Inlägg()
+                    InläggLista = _dejtingContext.Inlägg.ToList()
                 };
 
                 return View(model);
@@ -46,6 +45,7 @@ namespace Dejtingsida.Controllers
                 return View();
             }
         }
+        [Authorize]
         [Route("Profil/{Id}")]
         public IActionResult Index(string Id)
         {
@@ -57,7 +57,7 @@ namespace Dejtingsida.Controllers
                 AnvandareViewModel Model = new AnvandareViewModel()
                 {
                     Anvandare = Anvandare,
-                    //InläggLista = _dejtingContext.Inlägg.ToList()
+                    InläggLista = _dejtingContext.Inlägg.ToList()
                 };
                 return View(Model);
             }

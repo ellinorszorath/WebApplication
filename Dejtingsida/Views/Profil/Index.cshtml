@@ -41,55 +41,38 @@
         <div class="col-md-2">
             <input type="button" class="btn btn-primary pull-right" id="skickaVänförfrågan" value="Skicka vänförfrågan" onclick="location.href='@Url.Action("SkickaVänförfrågan", "Vänner", new { id = Model.Anvandare.Id})'" />
         </div>
-    }
-
-    <h4 class="col-sm-9 float-left text-left">Inlägg</h4>
-    <div class="nyttInlägg">
-        <a class="inlägg">Skriv ett inlägg</a>
-        <textarea id="postInnehåll" class="form-control" rows="5" style="resize:none;"></textarea>
-        <input id="post" type="submit" value="Skicka inlägg" class="btn btn-primary" ) />
-    </div>
-</div>
-<div>
-    @try
-    {
-        <!-- Ifall inga användare hittas skriv ut felmeddelande-->
-        @if (@Model != null)
-
-            @for (int index = 0; (index < _userManager.Users.Count() && index < 3); index++)
-            {
-                var registrerad = _userManager.Users.ToList()[index];
-                <div class="flex">
-                    <div class="exempelperson">
-                        <img class="profilbild" src="@registrerad.BildNamn" alt="Bild saknas" />
-                        <a href="/Profil/@registrerad.Id" class="Profil">@registrerad.Förnamn  @registrerad.Efternamn</a>
-                    </div>
-                </div>
-
-            }
-            else
-            {
-                <div class="container">
-                    <div class="row" style="margin-top: 2em;">
-                        <div class="col-12">
-                            <h3 style="text-align:center;">Testa null</h3>
-                        </div>
-                    </div>
-                </div>
-            }
-    }
-    catch (Exception)
-    {
-        <div class="container">
-            <div class="row" style="margin-top: 2em;">
-                <div class="col-12">
-                    <h3 style="text-align:center;">Vänligen fyll i något att söka på</h3> <!-- Skriv ut felmeddelande ifall du söker på tomt-->
-                </div>
-            </div>
+        <h4 class="col-sm-9 float-left text-left">Inlägg</h4>
+        <div class="nyttInlägg">
+            <a class="inlägg">Skriv ett inlägg</a>
+            <textarea id="postInnehåll" class="form-control" rows="5" style="resize:none;"></textarea>
+            <input id="post" type="submit" value="Skicka inlägg" class="btn btn-primary" ) />
         </div>
     }
-</div>
 
+    @if (!Model.InläggLista.Where(text => text.MottagareID.Equals(Model.Anvandare.Id)).Any())
+    {
+        <h1>Inga inlägg</h1>
+    }
+    else
+    {
+        foreach (var text in Model.InläggLista.Where(text => text.MottagareID.Equals(Model.Anvandare.Id)).OrderByDescending(text => text.Skapad))
+        {
+            <div class="Text" style=" background-color:white;">
+                <div class="" >
+                    <h5 class=""style="padding-top:5px; padding-left:5px">
+                        Medelande från
+                        <a asp-controller="Profil" asp-route-id="@text.SkickareID" style="color: black; padding-top:5px; padding-left:5px">
+                            @_userManager.FindByIdAsync(text.SkickareID).Result.Förnamn
+                        </a>
+                    </h5>
+                    <h6 class="Text" style="padding-top:5px; padding-left:5px">@text.Skapad.ToLocalTime().ToString("yyyy-MM-dd  HH:mm")</h6>
+                    <p class="Text" style="padding-top:5px; padding-left:5px">@text.Message</p>
+                </div>
+            </div>
+        }
+    }
+
+</div>
 <div class="clearfix"></div>
 
 @section Scripts {

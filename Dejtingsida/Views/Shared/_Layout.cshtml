@@ -30,9 +30,7 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
                         </li>
-                        @*<li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Registrera dig</a> //Vet inte om vi behöver ha registrera som en knapp när det finns en länk på loginsidan
-        </li>*@
+
                         @if (SignInManager.IsSignedIn(User))
                         {
                             <form class="form-inline" asp-controller="Home" asp-action="Sök" method="get">
@@ -70,27 +68,7 @@
             @RenderBody()
         </main>
     </div>
-    @*<div class="footer" style="margin-top:20px ">
-            <footer class="container" style="background-color: lightblue; padding:40px">
-                <div class="row">
-                    <div class="col-lg-4">
-                        <div class="h3" style="color: white">Om oss</div>
-                        <div style="color: white">
-                            En säker webbplats för dig som letar efter kärleken.
-                        </div>
-                    </div>
-                    <div class="col-lg-1"></div>
-                    <div class="col-lg-3" style="margin-right: 4px">
-                        <div class="h3" style="color: white">Länkar</div>
-                        <div>
-                            <a href="" style="color: white">Startsida</a> <br>
-                            <a href="" style="color: white">Registrera</a> <br>
-                            <a href="" style="color: white">Min profil</a> <br>
-                        </div>
-                    </div>
-                </div>
-            </footer>
-        </div>*@
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
