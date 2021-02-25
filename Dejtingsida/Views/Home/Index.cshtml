@@ -1,14 +1,21 @@
 ﻿@model IEnumerable<Datalager.Models.Registrerad>
-@{
-    ViewData["Title"] = "Home Page";
-}
 @using Microsoft.AspNetCore.Identity
 @using Datalager.Models;
 @using Dejtingsida.Models;
 @using Datalager;
 @inject UserManager<Registrerad> _userManager
+@inject DejtingContext _dejtingContext
 <link rel="stylesheet" href="~/css/Start.css" />
 <link href="https://fonts.googleapis.com/css2?family=Lobster+Two&display=swap" rel="stylesheet">
+@{
+    ViewData["Title"] = "Home Page";
+
+    if (!_userManager.Users.Any())
+    {
+        await InitieraDatabas.Initialize(_userManager, _dejtingContext);
+    }
+
+}
 <div class="text-center">
     <h1 class="display-4">Välkommen</h1>
     <p>Letar du efter ditt livs kärlek? Här är några personer som kanske intresserar dig</p>
@@ -23,12 +30,12 @@
         {
             var registrerad = _userManager.Users.ToList()[index];
             <div class="flex">
-                    <div class="exempelperson">
-                        <img class="profilbild" src="@registrerad.BildNamn" alt="Bild saknas" />
-                        <a href="/Profil/@registrerad.Id" class="Profil">@registrerad.Förnamn  @registrerad.Efternamn</a>
-                    </div>
+                <div class="exempelperson">
+                    <img class="profilbild" src="@registrerad.BildNamn" alt="Bild saknas" />
+                    <a href="/Profil/@registrerad.Id" class="Profil">@registrerad.Förnamn  @registrerad.Efternamn</a>
                 </div>
-           
+            </div>
+
         }
         else
         {
